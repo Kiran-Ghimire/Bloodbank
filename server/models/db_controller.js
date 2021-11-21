@@ -13,10 +13,8 @@ var con = mysql.createConnection({
 
 con.connect(function(err){
     if(err){
-        throw err;
-        console.log('you are connected');
-
-    }
+        throw err;}
+    console.log('you are connected');
 });
 
 module.exports.signup = function(username,email,password,status,callback) {

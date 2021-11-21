@@ -1,16 +1,17 @@
 const express = require("express");
-const home = require("./home");
+
 const mysql = require("mysql");
 const session = require("express-session");
 const router = express.Router();
 const bodyParser = require("body-parser");
-// const db = require.main.require("./models/db_controller");
+const db = require.main.require("./models/db_controller");
 const sweetalert = require("sweetalert2");
 const { check, validationResult } = require("express-validator");
 
-router.get("/", function (req, res) {
-  res.render("auth/login.ejs");
-});
+// router.get('/', function(req ,res){
+
+//     res.render('auth/login.ejs');
+// });
 
 const con = mysql.createConnection({
   host: "localhost",
@@ -27,49 +28,49 @@ router.use(
   })
 );
 
-router.use(express.urlencoded({ extended: true }));
-router.use(express.json());
+// router.use(express.urlencoded({ extended: true }));
+// router.use(express.json());
 
 router.post(
-  "/",
+  "/userlogin",
   [
     check("username").notEmpty().withMessage("Username is reequired"),
     check("password").notEmpty().withMessage("Password is reequired"),
   ],
-  function (request, response) {
-    const errors = validationResult(request);
+  function (req, res) {
+    const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return response.status(422).json({ errors: errors.array() });
+      return res.status(422).json({ errors: errors.array() });
     }
 
-    const username = request.body.username;
-    const password = request.body.password;
+    const username = req.body.username;
+    const password = req.body.password;
 
     if (username && password) {
       con.query(
-        "select * from adminuser where username = ? and password = ?",
+        "select * from user where username = ? and password = ?",
         [username, password],
         function (error, results, fields) {
           if (results.length > 0) {
-            request.session.loggedin = true;
-            request.session.username = username;
-            response.cookie("username", username);
-            const status = results[0].email_status;
+            req.session.loggedin = true;
+            req.session.username = username;
+            res.cookie("username", username);
+            const status = results[0].emailstatus;
             if (status === "not_verified") {
-              response.send("please verify your email");
+              res.send("please verify your email");
             } else {
               sweetalert.fire("logged In!");
-              response.redirect("/");
+              res.status(200).json(results);
             }
           } else {
-            response.send("Incorrect username / password");
+            res.send("Incorrect username / password");
           }
-          response.end();
+          res.end();
         }
       );
     } else {
-      response.send("please enter user name and password");
-      response.end();
+      res.send("please enter user name and password");
+      res.end();
     }
   }
 );

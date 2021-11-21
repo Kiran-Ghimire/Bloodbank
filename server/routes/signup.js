@@ -1,47 +1,66 @@
 const express = require("express");
-const router = express.Router();
+
 const bodyParser = require("body-parser");
-const db = require.main.require("./models/database");
+const db = require("../models/database");
 const mysql = require("mysql");
 const nodemailer = require("nodemailer");
 const randomToken = require("random-token");
 const { check, validationResult } = require("express-validator");
 
-// router.use(bodyParser.urlencoded({extended : true}));
-// router.use(express.json());
-
-router.get("/", function (req, res) {
-  res.render("auth/signup.ejs");
-});
+const router = express.Router();
 
 router.post(
-  "/",
-  [
-    check("username").notEmpty().withMessage("Username is required"),
-    check("password").notEmpty().withMessage("Password is required"),
-    check("email").notEmpty().isEmail().withMessage("Valid Email required"),
-  ],
-  function (req, res) {
+  "/blood",
+  //   [
+  //     check("username").notEmpty().withMessage("Username is required"),
+
+  //     check("email").notEmpty().isEmail().withMessage("Valid Email required"),
+  //     check("password").notEmpty().withMessage("Password is required"),
+  //     check("dob").notEmpty().withMessage("Date of birth is required"),
+  //     check("phone").notEmpty().withMessage("Phone is required"),
+  //     check("gender").notEmpty().withMessage("Gender is required"),
+  //     check("bloodtype").notEmpty().withMessage("Blood type is required"),
+  //     check("address").notEmpty().withMessage("Address is required"),
+  //   ],
+  (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-    const email_status = "not_verified";
-    const email = req.body.email;
-    const username = req.body.username;
+    const role = "User";
+    const emailstatus = "not_verified";
+    const {
+      username,
+      email,
+      password,
+      dob,
+      phone,
+      gender,
+      bloodtype,
+      address,
+    } = req.body;
+    console.log(req.body);
 
-    db.signupAdmin(
-      req.body.username,
-      req.body.email,
-      req.body.password,
-      email_status
+    db.signup(
+      username,
+      email,
+      password,
+      dob,
+      phone,
+      gender,
+      bloodtype,
+      address,
+      role,
+      emailstatus
     );
+    console.log("Signup DOneeeeeee!!");
     const token = randomToken(8);
 
-    db.verifyAdmin(req.body.username, email, token);
+    db.verify(req.body.username, email, token);
 
-    db.getuseridAdmin(email, function (err, result) {
-      console.log(result);
+    db.getuserid(email, function (err, result) {
+      console.log("Email", email);
+      console.log("Result", result);
       const id = result[0].id;
       const output =
         `
@@ -90,7 +109,7 @@ router.post(
       // res.send ('Check you email for token to verify');
     });
 
-    res.redirect("verify");
+    // res.redirect("verifymail");
   }
 );
 
