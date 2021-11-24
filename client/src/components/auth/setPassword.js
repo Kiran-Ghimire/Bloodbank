@@ -1,11 +1,17 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { BiDonateBlood } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setPassword } from "../redux/authSlice";
 
 const SetPassword = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
+    dispatch(setPassword(values));
+    history.push("/login");
   };
 
   return (

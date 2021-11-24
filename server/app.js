@@ -16,14 +16,15 @@ const app = express();
 const bodyParser = require("body-parser");
 
 const login = require("./controllers/login");
-const home = require("./controllers/home");
+const profile = require("./controllers/profile");
 const signup = require("./controllers/signup");
+const home = require("./controllers/home");
 // const add_doc = require('./controllers/commented/addUser');
 const users = require("./controllers/users");
 const db = require("./models/db_controller");
 const reset = require("./controllers/reset_controller");
 const set = require("./controllers/set_controller");
-const employee = require("./controllers/donors.js");
+const donors = require("./controllers/donors.js");
 const logout = require("./controllers/logout");
 const verify = require("./controllers/verify");
 const userRequests = require("./controllers/userRequests");
@@ -33,6 +34,7 @@ const loginUser = require("./routes/login");
 const logoutUser = require("./routes/logout");
 const userPasswordReset = require("./routes/resetPassword");
 const userSetPassword = require("./routes/setPassword");
+const becomeDonor = require("./routes/becomeDonor");
 // const landing = require ('./controllers/commented/landing');
 // const complain = require ('./controllers/commented/complain');
 // const inbox = require ('./controllers/commented/inbox');
@@ -68,10 +70,11 @@ app.use("/login", login);
 app.use("/setpassword", set);
 app.use("/resetpassword", reset);
 app.use("/", home);
+app.use(profile);
 
 app.use("/users", users);
-
-app.use("/donors", employee);
+app.use(becomeDonor);
+app.use("/donors", donors);
 app.use("/userlogout", logoutUser);
 app.use("/logout", logout);
 

@@ -16,10 +16,15 @@ con.connect(function (err) {
   console.log("you are connected to bloodbank");
 });
 
+module.exports.checkUser = function (email, callback) {
+  const query = "select * from user where email = '" + email + "' ";
+  con.query(query, callback);
+};
+
 module.exports.signup = function (
   username,
   email,
-  password,
+  hash,
   dob,
   phone,
   gender,
@@ -35,7 +40,7 @@ module.exports.signup = function (
     "','" +
     email +
     "','" +
-    password +
+    hash +
     "', '" +
     dob +
     "', '" +
@@ -52,6 +57,12 @@ module.exports.signup = function (
     emailstatus +
     "' )";
   con.query(query, callback);
+};
+
+module.exports.loginUser = function (username, callback) {
+  const query = "select * from user where username = '" + username + "' ";
+  con.query(query, callback);
+  console.log(query);
 };
 
 // module.exports.signup = function(username,email,password,dob, phone, gender, bloodtype, address,role, emailstatus,callback) {
@@ -104,7 +115,13 @@ module.exports.updateverify = function (email, emailstatus, callback) {
 };
 
 module.exports.findOne = function (email, callback) {
-  const query = "select *from user where email='" + email + "'";
+  const query = "select * from user where email='" + email + "'";
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.findTemp = function (id, callback) {
+  const query = "select * from temp where id='" + id + "'";
   con.query(query, callback);
   console.log(query);
 };
@@ -127,13 +144,9 @@ module.exports.checktoken = function (token, callback) {
   console.log(query);
 };
 
-module.exports.setpassword = function (id, newpassword, callback) {
+module.exports.setpassword = function (id, hash, callback) {
   const query =
-    "update `user` set `password`='" +
-    newpassword +
-    "' where userid='" +
-    id +
-    "'";
+    "update `user` set `password`='" + hash + "' where userid='" + id + "'";
   con.query(query, callback);
 };
 
@@ -209,6 +222,12 @@ module.exports.tempAdmin = function (id, email, token, callback) {
   con.query(query, callback);
 };
 
+module.exports.updateTemp = function (id, token, callback) {
+  const query = "update temp set token ='" + token + "' where id=" + id;
+  con.query(query, callback);
+  console.log(query);
+};
+
 module.exports.checktokenAdmin = function (token, callback) {
   var query = "select * from tempadmin where token='" + token + "'";
   con.query(query, callback);
@@ -277,6 +296,109 @@ module.exports.deleteUser = function (id, callback) {
 
 module.exports.searchUser = function (key, callback) {
   var query = 'SELECT  *from user where username like "%' + key + '%"';
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.getAllUser = function (callback) {
+  var query = "select * from user";
+  con.query(query, callback);
+};
+
+module.exports.getuserdetails = function (username, callback) {
+  var query = "select * from adminuser where username='" + username + "'";
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.editProfile = function (
+  id,
+  username,
+  email,
+  password,
+  callback
+) {
+  const query =
+    "update adminuser set username ='" +
+    username +
+    "', email = '" +
+    email +
+    "',password='" +
+    password +
+    "' where id=" +
+    id;
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.getDonor = function (id, callback) {
+  const query = "select * from user where userid= '" + id + "'";
+  con.query(query, callback);
+};
+
+module.exports.editRole = function (id, role, callback) {
+  const query = "update user set role='" + role + "' where userid=" + id;
+  con.query(query, callback);
+};
+
+module.exports.becomeDonor = function (id, callback) {
+  const query = "update user set role='Donor' where userid='" + id + "'";
+  con.query(query, callback);
+};
+// UPDATE `user` SET `role` = 'Donor' WHERE `user`.`userid` = 36;
+
+module.exports.getAllDonor = function (callback) {
+  const query = "select * from user where role= 'Donor'";
+  con.query(query, callback);
+};
+
+module.exports.getDonorbyId = function (id, callback) {
+  var query = "select * from user where role='Donor' and userid =" + id;
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.editDonor = function (
+  id,
+  username,
+  email,
+  dob,
+  phone,
+  gender,
+  bloodtype,
+  address,
+  callback
+) {
+  const query =
+    "update `user` set `username`='" +
+    username +
+    "', `email`= '" +
+    email +
+    "', `dob`= '" +
+    dob +
+    "', `phone` = '" +
+    phone +
+    "', `gender` = '" +
+    gender +
+    "', `bloodtype` = '" +
+    bloodtype +
+    "', `address` = '" +
+    address +
+    "' where userid=" +
+    id;
+  con.query(query, callback);
+  // console.log(query);
+};
+
+module.exports.deleteDonor = function (id, callback) {
+  var query = "delete  from user where role='Donor' and userid =" + id;
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.searchUser = function (key, callback) {
+  var query =
+    'SELECT  *from user where username like "%' + key + '%" and role="Donor"';
   con.query(query, callback);
   console.log(query);
 };

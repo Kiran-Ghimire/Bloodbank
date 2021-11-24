@@ -20,9 +20,16 @@ router.post("/userresetpassword", function (req, res) {
       console.log("Mail does not exist");
       //   res.redirect("back");
     }
+
     const id = result1[0].userid;
     const email = result1[0].email;
     const token = randomToken(8);
+    db.findTemp(id, (err, result) => {
+      console.log("result", result);
+      if (result) {
+        db.updateTemp(id, token);
+      }
+    });
     db.temp(id, email, token, function (err, result2) {
       const output =
         `

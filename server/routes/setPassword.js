@@ -1,9 +1,9 @@
 const express = require("express");
-
+const bcrypt = require("bcrypt");
 const router = express.Router();
 const bodyParser = require("body-parser");
 const db = require.main.require("./models/database");
-
+const saltRounds = 10;
 // router.use(bodyParser.urlencoded({ extended: true }));
 // router.use(bodyParser.json());
 
@@ -19,15 +19,19 @@ router.post("/usersetpassword", function (req, res) {
     if (result.length > 0) {
       console.log(result);
       const newpassword = req.body.password;
-      const id = result[0].id;
-      db.setpassword(id, newpassword, function (err, result1) {
-        console.log("result1", result1);
-        if (err) {
-          // console.log('token did not match');
-          res.send("token did not match");
-        } else {
-          res.send("Password has been changed...Go to login page");
-        }
+      bcrypt.hash(newpassword, saltRounds, (err, hash) => {
+        err && res.json({ message: "Error Occurred.", type: "error" });
+
+        const id = result[0].id;
+        db.setpassword(id, hash, function (err, result1) {
+          console.log("result1", result1);
+          if (err) {
+            // console.log('token did not match');
+            res.send("token did not match");
+          } else {
+            res.send("Password has been changed...Go to login page");
+          }
+        });
       });
     } else {
       res.send("Token didnt match!!!");

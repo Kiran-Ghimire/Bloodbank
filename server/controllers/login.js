@@ -1,5 +1,5 @@
 const express = require("express");
-const home = require("./home");
+const home = require("./profile");
 const mysql = require("mysql");
 const session = require("express-session");
 const router = express.Router();

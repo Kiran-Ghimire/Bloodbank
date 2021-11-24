@@ -1,11 +1,24 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { BiDonateBlood } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginNewUser } from "../redux/authSlice";
+import { useSelector } from "react-redux";
 
 const Login = () => {
+  const userData = useSelector((state) => state.authUser.userData);
+  const history = useHistory();
+  const dispatch = useDispatch();
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
+    dispatch(loginNewUser(values));
+    if (userData?.length > 0) {
+      console.log("datatatatatattatatta");
+      history.push("/");
+    } else {
+      console.log("Error ayo");
+    }
   };
 
   return (

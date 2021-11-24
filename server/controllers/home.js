@@ -1,7 +1,7 @@
-var express = require("express");
-var router = express.Router();
-var db = require.main.require("./models/db_controller");
-var bodyPaser = require("body-parser");
+const express = require("express");
+const router = express.Router();
+const db = require.main.require("./models/database");
+const bodyPaser = require("body-parser");
 
 router.get("*", function (req, res, next) {
   if (req.cookies["username"] == null) {
@@ -12,52 +12,12 @@ router.get("*", function (req, res, next) {
 });
 
 router.get("/", function (req, res) {
-  db.getAllDoc(function (err, result) {
-    db.getallappointment(function (err, result1) {
-      var total_doc = result.length;
-      var appointment = result1.length;
-
-      res.render("home.ejs", {
-        doc: total_doc,
-        doclist: result,
-        appointment: appointment,
-        applist: result1,
-      });
+  db.getAllUser(function (err, result) {
+    res.render("home.ejs", {
+      userlist: result,
     });
+
     //console.log(result.length);
-  });
-});
-
-router.get("/profile", function (req, res) {
-  var username = req.cookies["username"];
-  db.getuserdetails(username, function (err, result) {
-    //console.log(result);
-    res.render("auth/profile.ejs", { list: result });
-  });
-});
-
-router.post("/profile", function (req, res) {
-  var username = req.cookies["username"];
-  db.getuserdetails(username, function (err, result) {
-    var id = result[0].id;
-    var password = result[0].password;
-    var username = result[0].username;
-    if (password == req.body.password) {
-      db.edit_profile(
-        id,
-        req.body.username,
-        req.body.email,
-        req.body.new_password,
-        function (err, result1) {
-          if (result1) {
-            res.send("profile edited successfully");
-          }
-          if (!result1) {
-            res.send("old password did not match");
-          }
-        }
-      );
-    }
   });
 });
 

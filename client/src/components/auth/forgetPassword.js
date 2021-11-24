@@ -1,11 +1,17 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { BiDonateBlood } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { forgetPassword } from "../redux/authSlice";
 
 const ForgetPassword = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
+    dispatch(forgetPassword(values));
+    history.push("/setpassword");
   };
 
   return (
@@ -67,7 +73,7 @@ const ForgetPassword = () => {
           <div
             style={{ display: "flex", flexDirection: "column", gap: "10px" }}
           >
-            <Link to="/setpassword">Token Received</Link>
+            {/* <Link to="/setpassword">Token Received</Link> */}
             <Link to="/login">Back to Login</Link>
           </div>
         </Form>

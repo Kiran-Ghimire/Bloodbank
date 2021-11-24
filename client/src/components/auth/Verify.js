@@ -1,16 +1,16 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import { BiDonateBlood } from "react-icons/bi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { verifyNewUser } from "../redux/authSlice";
 
 const Verify = () => {
-  const navigate = useNavigate();
+  const history = useHistory();
   const dispatch = useDispatch();
   const onFinish = (values) => {
     console.log("Success:", values);
     dispatch(verifyNewUser(values));
-    navigate("/login");
+    history.push("/login");
   };
 
   const onFinishFailed = (errorInfo) => {

@@ -16,7 +16,7 @@ import { BiDonateBlood } from "react-icons/bi";
 import { icons } from "antd/lib/image/PreviewGroup";
 import { useDispatch } from "react-redux";
 import { postNewUser } from "../redux/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 const { Option } = Select;
 const formItemLayout = {
@@ -67,14 +67,14 @@ const tailFormItemLayout = {
 //   }
 
 const Signup = () => {
-  const navigate = useNavigate();
+  const history = useHistory();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
     dispatch(postNewUser(values));
     // axios.post("http://localhost:3001/blood", values);
-    navigate("/verify");
+    history.push("/verify");
   };
 
   return (
