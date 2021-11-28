@@ -8,6 +8,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Input } from "antd";
 import { becomeDonor } from "../redux/authSlice";
 import { useSelector } from "react-redux";
+import SearchDonor from "./searchDonor";
 
 const { Search } = Input;
 
@@ -16,7 +17,7 @@ const Bloodbank = () => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.authUser.userData[0]);
   console.log("Blooddbank", userData);
-  const { userid } = userData;
+  const { userid, role } = userData;
   console.log(userid);
 
   const showModal = () => {
@@ -38,10 +39,15 @@ const Bloodbank = () => {
   //     userData ? navigate("/home") : navigate("/login");
   //   }, [userData]);
 
-  const onClick = () => {
+  const logOut = () => {
     dispatch(logout());
     history.push("/login");
   };
+
+  const userProfile = () => {
+    history.push("/profile");
+  };
+
   return (
     <>
       <div
@@ -65,21 +71,42 @@ const Bloodbank = () => {
             justifyContent: "flex-end",
           }}
         >
-          <Button type="primary" onClick={onClick}>
+          <Button
+            type="primary"
+            onClick={userProfile}
+            style={{ marginRight: "20px" }}
+          >
+            User Profile
+          </Button>
+
+          <Button type="primary" onClick={logOut}>
             Logout
           </Button>
         </div>
-        <div>
+        {/* <div>
           <Search
             placeholder="Search for Donors"
             enterButton="Search"
             size="large"
           />
-        </div>
+        </div> */}
+        {/* <div>
+          <Search
+            placeholder="Search for Donors"
+            enterButton="Search"
+            size="large"
+          />
+        </div> */}
+        <SearchDonor />
         <div
           style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
-          <Button type="primary" onClick={showModal}>
+          <Button
+            type="primary"
+            onClick={showModal}
+            disabled={role === "Donor" ? true : false}
+          >
+            {" "}
             Become a donor
           </Button>
           <Modal

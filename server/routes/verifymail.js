@@ -16,10 +16,11 @@ router.post("/verifyuser", function (req, res) {
       const email = result[0].email;
       const emailstatus = "verified";
       db.updateverify(email, emailstatus, function (err, result1) {
-        res.status(200).json(result1);
+        res.status(200).json({ result1: result1 });
       });
     } else {
-      res.send("Token did not match");
+      // res.send("Token did not match");
+      res.status(404).json({ message: "Token did not match" });
     }
   });
 });

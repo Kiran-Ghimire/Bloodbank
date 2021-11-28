@@ -1,7 +1,7 @@
-var express = require("express");
-var router = express.Router();
-var bodyParser = require("body-parser");
-var db = require.main.require("./models/database");
+const express = require("express");
+const router = express.Router();
+const bodyParser = require("body-parser");
+const db = require.main.require("./models/database");
 const { check, validationResult } = require("express-validator");
 
 module.exports = router;
@@ -25,12 +25,12 @@ router.get("/", function (req, res) {
 // });
 
 // router.post("/adddonor", function (req, res) {
-//   var name = req.body.name;
-//   var email = req.body.email;
-//   var contact = req.body.contact;
-//   var join_date = req.body.date;
-//   var role = req.body.role;
-//   var salary = req.body.salary;
+//   const name = req.body.name;
+//   const email = req.body.email;
+//   const contact = req.body.contact;
+//   const join_date = req.body.date;
+//   const role = req.body.role;
+//   const salary = req.body.salary;
 
 //   db.add_employee(
 //     name,
@@ -55,7 +55,7 @@ router.get("/editdonor/:id", function (req, res) {
 });
 
 router.post("/editdonor/:id", function (req, res) {
-  var id = req.params.id;
+  const id = req.params.id;
   db.editDonor(
     id,
     req.body.username,
@@ -67,20 +67,21 @@ router.post("/editdonor/:id", function (req, res) {
     req.body.address,
     function (err, result) {
       if (err) throw err;
+
       res.redirect("/donors");
     }
   );
 });
 
 router.get("/deletedonor/:id", function (req, res) {
-  var id = req.params.id;
+  const id = req.params.id;
   db.getDonorbyId(id, function (err, result) {
     res.render("donor/deleteDonor.ejs", { list: result });
   });
 });
 
 router.post("/deletedonor/:id", function (req, res) {
-  var id = req.params.id;
+  const id = req.params.id;
 
   db.deleteDonor(id, function (err, result) {
     res.redirect("/donors");
@@ -88,8 +89,8 @@ router.post("/deletedonor/:id", function (req, res) {
 });
 
 router.post("/search", function (req, res) {
-  var key = req.body.search;
-  db.searchUser(key, function (err, result) {
+  const key = req.body.search;
+  db.searchDonor(key, function (err, result) {
     console.log(result);
 
     res.render("donor/donors.ejs", { list: result });

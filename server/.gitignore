@@ -1,5 +1,4 @@
 /node_modules
 /nodelogin.sql
 /models/db_controller
-/views/userrequest
-/views/appointment
+

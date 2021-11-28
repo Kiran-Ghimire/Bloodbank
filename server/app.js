@@ -19,7 +19,7 @@ const login = require("./controllers/login");
 const profile = require("./controllers/profile");
 const signup = require("./controllers/signup");
 const home = require("./controllers/home");
-// const add_doc = require('./controllers/commented/addUser');
+
 const users = require("./controllers/users");
 const db = require("./models/db_controller");
 const reset = require("./controllers/reset_controller");
@@ -35,13 +35,10 @@ const logoutUser = require("./routes/logout");
 const userPasswordReset = require("./routes/resetPassword");
 const userSetPassword = require("./routes/setPassword");
 const becomeDonor = require("./routes/becomeDonor");
-// const landing = require ('./controllers/commented/landing');
-// const complain = require ('./controllers/commented/complain');
-// const inbox = require ('./controllers/commented/inbox');
-// const appointment = require ('./controllers/commented/appointment');
-
-// const receipt = require ('./controllers/commented/receipt');
-// const chat = require ('./controllers/commented/chat');
+const profileUser = require("./routes/profileUser");
+const changePassword = require("./routes/changePassword");
+const searchDonor = require("./routes/searchDonorUser");
+const requestAdmin = require("./routes/requestAdmin");
 
 app.set("view engine ", "ejs");
 
@@ -70,15 +67,18 @@ app.use("/login", login);
 app.use("/setpassword", set);
 app.use("/resetpassword", reset);
 app.use("/", home);
+app.use(profileUser);
 app.use(profile);
-
+app.use(changePassword);
+app.use(searchDonor);
+app.use(requestAdmin);
+app.use(userRequests);
 app.use("/users", users);
+
 app.use(becomeDonor);
 app.use("/donors", donors);
 app.use("/userlogout", logoutUser);
 app.use("/logout", logout);
-
-app.use("/userrequests", userRequests);
 
 const server = app.listen(3001, function () {
   console.log("server started");

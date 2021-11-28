@@ -32,10 +32,11 @@ module.exports.signup = function (
   address,
   role,
   emailstatus,
+  reqstatus,
   callback
 ) {
   const query =
-    "INSERT INTO `user`(`username`,`email`,`password`, `dob`, `phone`, `gender`, `bloodtype`, `address`, `role`, `emailstatus`) VALUES ('" +
+    "INSERT INTO `user`(`username`,`email`,`password`, `dob`, `phone`, `gender`, `bloodtype`, `address`, `role`, `emailstatus`, `reqstatus`) VALUES ('" +
     username +
     "','" +
     email +
@@ -55,12 +56,14 @@ module.exports.signup = function (
     role +
     "', '" +
     emailstatus +
+    "','" +
+    reqstatus +
     "' )";
   con.query(query, callback);
 };
 
-module.exports.loginUser = function (username, callback) {
-  const query = "select * from user where username = '" + username + "' ";
+module.exports.loginUser = function (email, callback) {
+  const query = "select * from user where email = '" + email + "' ";
   con.query(query, callback);
   console.log(query);
 };
@@ -76,7 +79,7 @@ module.exports.loginUser = function (username, callback) {
 // }
 
 // module.exports.verify = function (username,email,token,callback){
-//     var query = "insert into verify (username,email,token) values (?,?,?)";
+//     const query = "insert into verify (username,email,token) values (?,?,?)";
 //     con.query(query,callback);
 // }
 
@@ -122,6 +125,12 @@ module.exports.findOne = function (email, callback) {
 
 module.exports.findTemp = function (id, callback) {
   const query = "select * from temp where id='" + id + "'";
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.findUserVerify = function (id, callback) {
+  const query = "select * from verify where id='" + id + "'";
   con.query(query, callback);
   console.log(query);
 };
@@ -188,14 +197,14 @@ module.exports.verifyAdmin = function (username, email, token, callback) {
 };
 
 module.exports.matchtokenAdmin = function (id, token, callback) {
-  var query =
+  const query =
     "select * from `verifyadmin` where token='" + token + "' and id=" + id;
   con.query(query, callback);
   console.log(query);
 };
 
 module.exports.updateverifyAdmin = function (email, email_status, callback) {
-  var query =
+  const query =
     "update `adminuser` set `email_status`='" +
     email_status +
     "' where `email`='" +
@@ -205,13 +214,13 @@ module.exports.updateverifyAdmin = function (email, email_status, callback) {
 };
 
 module.exports.findOneAdmin = function (email, callback) {
-  var query = "select *from adminuser where email='" + email + "'";
+  const query = "select *from adminuser where email='" + email + "'";
   con.query(query, callback);
   console.log(query);
 };
 
 module.exports.tempAdmin = function (id, email, token, callback) {
-  var query =
+  const query =
     "insert into `tempadmin` (`id`,`email`,`token`) values ('" +
     id +
     "','" +
@@ -229,25 +238,61 @@ module.exports.updateTemp = function (id, token, callback) {
 };
 
 module.exports.checktokenAdmin = function (token, callback) {
-  var query = "select * from tempadmin where token='" + token + "'";
+  const query = "select * from tempadmin where token='" + token + "'";
   con.query(query, callback);
   console.log(query);
 };
 
 module.exports.setpasswordAdmin = function (id, newpassword, callback) {
-  var query =
+  const query =
     "update `adminuser` set `password`='" + newpassword + "' where id=" + id;
   con.query(query, callback);
 };
 
 module.exports.getAllUser = function (callback) {
-  var query = "select * from user";
+  const query = "select * from user";
   con.query(query, callback);
+};
+
+module.exports.editUserProfile = function (
+  id,
+  username,
+  email,
+  dob,
+  phone,
+  gender,
+  bloodtype,
+  address,
+  role,
+  callback
+) {
+  const query =
+    "update `user` set `username`='" +
+    username +
+    "', `email`= '" +
+    email +
+    "', `dob`= '" +
+    dob +
+    "', `phone` = '" +
+    phone +
+    "', `gender` = '" +
+    gender +
+    "', `bloodtype` = '" +
+    bloodtype +
+    "', `address` = '" +
+    address +
+    "', `role` = '" +
+    role +
+    "' where userid=" +
+    id;
+  con.query(query, callback);
+  console.log(query);
 };
 
 module.exports.getUserbyId = function (id, callback) {
   const query = "select * from user where userid =" + id + "";
   con.query(query, callback);
+  console.log("getUserbyId", query);
 };
 
 module.exports.editUser = function (
@@ -295,18 +340,18 @@ module.exports.deleteUser = function (id, callback) {
 };
 
 module.exports.searchUser = function (key, callback) {
-  var query = 'SELECT  *from user where username like "%' + key + '%"';
+  const query = 'SELECT  * from user where username like "%' + key + '%"';
   con.query(query, callback);
   console.log(query);
 };
 
 module.exports.getAllUser = function (callback) {
-  var query = "select * from user";
+  const query = "select * from user";
   con.query(query, callback);
 };
 
 module.exports.getuserdetails = function (username, callback) {
-  var query = "select * from adminuser where username='" + username + "'";
+  const query = "select * from adminuser where username='" + username + "'";
   con.query(query, callback);
   console.log(query);
 };
@@ -353,7 +398,7 @@ module.exports.getAllDonor = function (callback) {
 };
 
 module.exports.getDonorbyId = function (id, callback) {
-  var query = "select * from user where role='Donor' and userid =" + id;
+  const query = "select * from user where role='Donor' and userid =" + id;
   con.query(query, callback);
   console.log(query);
 };
@@ -387,18 +432,68 @@ module.exports.editDonor = function (
     "' where userid=" +
     id;
   con.query(query, callback);
-  // console.log(query);
+  console.log(query);
 };
 
 module.exports.deleteDonor = function (id, callback) {
-  var query = "delete  from user where role='Donor' and userid =" + id;
+  const query = "delete  from user where role='Donor' and userid =" + id;
   con.query(query, callback);
   console.log(query);
 };
 
-module.exports.searchUser = function (key, callback) {
-  var query =
-    'SELECT  *from user where username like "%' + key + '%" and role="Donor"';
+module.exports.searchDonor = function (key, callback) {
+  const query =
+    'SELECT  * from user where username like "%' + key + '%" and role="Donor"';
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.searchDonorUser = function (key1, key2, callback) {
+  const query =
+    'SELECT  * from user where  role="Donor" and   address like "%' +
+    key1 +
+    '%"  and bloodtype like "%' +
+    key2 +
+    '%" ';
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.getUserPw = function (id, callback) {
+  const query = "select * from user where  userid =" + id + "";
+  con.query(query, callback);
+  console.log("getUserPw", query);
+};
+
+module.exports.changePassword = function (id, hash, callback) {
+  const query =
+    "update `user` set `password`='" + hash + "'  where userid=" + id;
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.updateReqStatus = function (id, reqstatus, callback) {
+  const query =
+    "update `user` set `reqstatus`='" +
+    reqstatus +
+    "' where `userid`='" +
+    id +
+    "'";
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.totalReqStatus = function (callback) {
+  const query = "select * from user where reqstatus= 'Requested'";
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.totalReqApproved = function (id, callback) {
+  const query =
+    "select username, email, dob, phone, address, bloodtype, gender from user where reqstatus= 'Approved' and userid='" +
+    id +
+    "";
   con.query(query, callback);
   console.log(query);
 };

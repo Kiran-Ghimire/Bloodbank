@@ -1,30 +1,30 @@
-var express = require("express");
-var flash = require("flash");
-var router = express.Router();
-var bodyParser = require("body-parser");
-//var async = require ('async');
-var nodemailer = require("nodemailer");
-//var crypto = require ('crypto');
-var randomToken = require("random-token");
-var db = require.main.require("./models/database");
+const express = require("express");
+const flash = require("flash");
+const router = express.Router();
+const bodyParser = require("body-parser");
+//const async = require ('async');
+const nodemailer = require("nodemailer");
+//const crypto = require ('crypto');
+const randomToken = require("random-token");
+const db = require.main.require("./models/database");
 
 router.get("/", function (req, res) {
   res.render("auth/resetpassword.ejs");
 });
 
 router.post("/", function (req, res) {
-  var email = req.body.email;
+  const email = req.body.email;
   db.findOneAdmin(email, function (err, result1) {
     // console.log(result);
     if (!result1) {
       console.log("Mail does not exist");
       res.redirect("back");
     }
-    var id = result1[0].id;
-    var email = result1[0].email;
-    var token = randomToken(8);
+    const id = result1[0].id;
+    const email = result1[0].email;
+    const token = randomToken(8);
     db.tempAdmin(id, email, token, function (err, result2) {
-      var output =
+      const output =
         `
             <p>Dear User, </p>
             <p>Your are receiving this email because you had requested to reset your password.</p>
@@ -45,7 +45,7 @@ router.post("/", function (req, res) {
             <p>H Manager</p>
         `;
 
-      var transporter = nodemailer.createTransport({
+      const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
           user: "n4scent9@gmail.com",
@@ -53,7 +53,7 @@ router.post("/", function (req, res) {
         },
       });
 
-      var mailOptions = {
+      const mailOptions = {
         from: "n4scent9@gmail.com", // sender address
         to: email, // list of receivers
         subject: "Password Reset", // Subject line

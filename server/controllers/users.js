@@ -1,11 +1,11 @@
-var express = require("express");
-var router = express.Router();
-var bodyParser = require("body-parser");
-var multer = require("multer");
-var fs = require("fs");
-var path = require("path");
+const express = require("express");
+const router = express.Router();
+const bodyParser = require("body-parser");
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
 
-var db = require.main.require("./models/database");
+const db = require.main.require("./models/database");
 
 router.get("*", function (req, res, next) {
   if (req.cookies["username"] == null) {
@@ -15,7 +15,7 @@ router.get("*", function (req, res, next) {
   }
 });
 
-// var storage = multer.diskStorage({
+// const storage = multer.diskStorage({
 //   destination: function (req, file, cb) {
 //     cb(null, "public/assets/images/upload_images"); //here we specify the destination. in this case i specified the current directory
 //   },
@@ -26,7 +26,7 @@ router.get("*", function (req, res, next) {
 //   },
 // });
 
-// var upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
 
 router.get("/", function (req, res) {
   db.getAllUser(function (err, result) {
@@ -105,7 +105,7 @@ router.get("/deleteUser/:id", function (req, res) {
 });
 
 router.post("/deleteUser/:id", function (req, res) {
-  var id = req.params.id;
+  const id = req.params.id;
   db.deleteUser(id, function (err, result) {
     if (err) throw err;
     res.redirect("/users");
@@ -114,11 +114,11 @@ router.post("/deleteUser/:id", function (req, res) {
 
 //  router.get('/search',function(req,res){
 //      res.rende
-//      var key = req.body.search;
+//      const key = req.body.search;
 //      console.log(key);
 //     db.searchDoc(key,function(err, rows, fields) {
 //         if (err) throw err;
-//       var data=[];
+//       const data=[];
 //       for(i=0;i<rows.length;i++)
 //         {
 //           data.push(rows[i].first_name);

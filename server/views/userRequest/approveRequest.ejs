@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<body>
+
+  
+    <%- include ('../includes/header.ejs') %>
+    <%- include ('../includes/nav.ejs') %> 
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <h4 class="page-title">Approve Donor</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <% for (var i = 0; i < list.length; i++){ %>
+                        <form method="POST" action="">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                       
+                                        <label>User Name</label>
+                                        <input class="form-control" type="text" name="username" value="<%= list[i].username %>">
+                                    </div>
+                                </div>
+                           
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group ">
+                                        
+                                        <label>Date of Birth</label>
+                                        <div class="cal-icon">
+                                        <input class="form-control " type="text" name="dob" value="<%= list[i].dob %>">
+                                    </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                            <div class="row">
+                               
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input class="form-control" type="text" name="email" value="<%= list[i].email %>">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="Address">
+                                        <label>Address</label>
+                                        
+                                        <input class="form-control " type="text" name="address" value="<%= list[i].address %>"> 
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Phone</label>
+                                        <input class="form-control" type="text"  name="phone" value="<%= list[i].phone %>">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Blood Type</label>
+                                        <input class="form-control" type="text" placeholder="" name="bloodtype" value="<%= list[i].bloodtype %>">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Gender</label>
+                                        <input class="form-control" type="text" placeholder="" name="gender" value="<%= list[i].gender %>">
+                                    </div>
+                                </div>
+                               
+                               
+                            </div>
+                            <div class="m-t-20 text-center">
+                                <button class="btn btn-primary submit-btn">Approve User</button>
+                                <% } %>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+			
+        </div>
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+     <script src="/assets/js/jquery-3.2.1.min.js"></script>
+	<script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/jquery.slimscroll.js"></script>
+    <script src="/assets/js/select2.min.js"></script>
+	<script src="/assets/js/moment.min.js"></script>
+	<script src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/assets/js/app.js"></script>
+</body>
+
+
+<!-- add-asset24:09-->
+</html>

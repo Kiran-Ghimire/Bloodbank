@@ -22,8 +22,8 @@ export const postNewUser = createAsyncThunk(
     try {
       const url = "http://localhost:3001/blood";
       const userData = await axios.post(url, payload);
-      console.log(payload);
-      return [userData, null];
+      console.log("signupppppp", payload);
+      return [userData.data, null];
     } catch (error) {
       const err = rejectWithValue(error).payload.response.data;
       return [null, err];
@@ -92,7 +92,7 @@ export const setPassword = createAsyncThunk(
 );
 
 export const becomeDonor = createAsyncThunk(
-  "post/setpassword",
+  "post/becomedonor",
   async (payload, { rejectWithValue }) => {
     try {
       console.log("payloaaaaaaaaaad", payload);
@@ -109,18 +109,66 @@ export const becomeDonor = createAsyncThunk(
   }
 );
 
+export const editProfile = createAsyncThunk(
+  "post/editprofile",
+  async (payload, { rejectWithValue }) => {
+    try {
+      console.log("payloaaaaaaaaaad", payload);
+      const url = `http://localhost:3001/editprofile`;
+
+      const userData = await axios.post(url, payload);
+      console.log("here", payload);
+      console.log(userData);
+      return [userData.data, null];
+    } catch (error) {
+      const err = rejectWithValue(error).payload.response.data;
+      return [null, err];
+    }
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  "post/changepassword",
+  async (payload, { rejectWithValue }) => {
+    try {
+      console.log("payloaaaaaaaaaad", payload);
+      const url = `http://localhost:3001/changepassword`;
+
+      const userData = await axios.post(url, payload);
+      console.log("here", payload);
+      console.log(userData);
+      return [userData.data, null];
+    } catch (error) {
+      const err = rejectWithValue(error).payload.response.data;
+      return [null, err];
+    }
+  }
+);
+
+export const searchDonor = createAsyncThunk(
+  "post/searchdonors",
+  async (payload, { rejectWithValue }) => {
+    try {
+      console.log("payloaaaaaaaaaad", payload);
+      const url = `http://localhost:3001/searchdonor`;
+
+      const userData = await axios.post(url, payload);
+      console.log("here", payload);
+      console.log(userData);
+      return [userData.data, null];
+    } catch (error) {
+      const err = rejectWithValue(error).payload.response.data;
+      return [null, err];
+    }
+  }
+);
+
 export const logout = createAsyncThunk(
   "post/logout",
   async (payload, { rejectWithValue }) => {
-    // try {
-    //   const url = "http://localhost:3001/usersetpassword";
-    //   const userData = await axios.post(url, payload);
-    //   console.log("here", payload);
-    //   return [userData, null];
-    // } catch (error) {
-    //   const err = rejectWithValue(error).payload.response.data;}
     return [];
   }
+
   // {return null;}
 );
 
@@ -130,6 +178,8 @@ const initialState = {
   userData: [],
   auth: false,
   token: null,
+  signUp: [],
+  donors: [],
 };
 const userDetailSlice = createSlice({
   initialState,
@@ -147,7 +197,7 @@ const userDetailSlice = createSlice({
       state.loading = false;
       const [userData, error] = action.payload;
       if (!error) {
-        state.userData = userData;
+        state.signUp = userData;
       } else {
         state.error = error;
       }
@@ -213,6 +263,7 @@ const userDetailSlice = createSlice({
     [logout.fulfilled]: (state, action) => {
       state.loading = false;
       state.auth = false;
+      state.token = null;
       const [userData, error] = action.payload;
 
       state.userData = [];
@@ -227,6 +278,45 @@ const userDetailSlice = createSlice({
       }
     },
     [becomeDonor.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [editProfile.fulfilled]: (state, action) => {
+      state.loading = false;
+      const [userData, error] = action.payload;
+      if (!error) {
+        state.userData = userData.result;
+      } else {
+        state.error = error;
+      }
+    },
+    [editProfile.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [changePassword.fulfilled]: (state, action) => {
+      state.loading = false;
+      const [userData, error] = action.payload;
+      if (!error) {
+        state.userData = userData.result;
+      } else {
+        state.error = error;
+      }
+    },
+    [changePassword.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [searchDonor.fulfilled]: (state, action) => {
+      state.loading = false;
+      const [userData, error] = action.payload;
+      if (!error) {
+        state.donors = userData.result;
+      } else {
+        state.error = error;
+      }
+    },
+    [searchDonor.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },

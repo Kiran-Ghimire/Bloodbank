@@ -1,8 +1,8 @@
-var express = require("express");
+const express = require("express");
 
-var router = express.Router();
-var bodyParser = require("body-parser");
-var db = require.main.require("./models/database");
+const router = express.Router();
+const bodyParser = require("body-parser");
+const db = require.main.require("./models/database");
 
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
@@ -14,12 +14,12 @@ router.get("/", function (req, res) {
 });
 
 router.post("/", function (req, res) {
-  var token = req.body.token;
+  const token = req.body.token;
   db.checktokenAdmin(token, function (err, result) {
     if (result.length > 0) {
       console.log(result);
-      var newpassword = req.body.password;
-      var id = result[0].id;
+      const newpassword = req.body.password;
+      const id = result[0].id;
       db.setpasswordAdmin(id, newpassword, function (err, result1) {
         if (err) {
           // console.log('token did not match');

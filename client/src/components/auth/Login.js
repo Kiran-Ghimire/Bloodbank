@@ -47,17 +47,21 @@ const Login = () => {
           onFinish={onFinish}
         >
           <Form.Item
-            name="username"
+            name="email"
             rules={[
               {
+                type: "email",
+                message: "The input is not valid E-mail!",
+              },
+              {
                 required: true,
-                message: "Please input your Username!",
+                message: "Please input your Email!",
               },
             ]}
           >
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="Username"
+              placeholder="Email"
             />
           </Form.Item>
           <Form.Item
@@ -69,7 +73,7 @@ const Login = () => {
               },
             ]}
           >
-            <Input
+            <Input.Password
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
               placeholder="Password"

@@ -29,6 +29,7 @@ router.post(
     }
     const role = "User";
     const emailstatus = "not_verified";
+    const reqstatus = "idle";
     const {
       username,
       email,
@@ -43,10 +44,14 @@ router.post(
     const saltRounds = await bcrypt.genSalt(10);
     db.checkUser(email, (err, result) => {
       if (result.length > 0) {
-        res.send({ message: "User already exists.", type: "warning" });
+        // res.send();
+        res
+          .status(404)
+          .json({ message: "User already exists.", type: "warning" });
       } else {
         bcrypt.hash(password, saltRounds, (err, hash) => {
-          err && res.json({ message: "Error Occurred.", type: "error" });
+          err &&
+            res.status(404).json({ message: "Error Occurred.", type: "error" });
           console.log(hash);
           if (!err) {
             db.signup(
@@ -60,6 +65,7 @@ router.post(
               address,
               role,
               emailstatus,
+              reqstatus,
               (err, result) => {
                 if (err) {
                   console.log(err);

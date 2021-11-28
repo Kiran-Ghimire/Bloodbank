@@ -22,8 +22,6 @@ router.post("/becomedonor/:id", function (req, res) {
   db.becomeDonor(id, function (err, result) {
     if (err) throw err;
 
-    //res.render('edit_doctor.ejs',{list:result});
-    //   res.redirect("/users");
     db.getDonor(id, function (err, result) {
       if (err) throw err;
       console.log(result);
