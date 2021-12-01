@@ -1,5 +1,5 @@
 {
-  "name": "hospital_management",
+  "name": "Bloodbank",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -7,7 +7,7 @@
     "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Shahid Afridi Zihad",
+  "author": "Kiran Ghimire",
   "license": "ISC",
   "dependencies": {
     "async": "^3.1.1",

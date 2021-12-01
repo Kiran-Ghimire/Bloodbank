@@ -163,6 +163,60 @@ export const searchDonor = createAsyncThunk(
   }
 );
 
+export const requestDonor = createAsyncThunk(
+  "post/requestdonor",
+  async (payload, { rejectWithValue }) => {
+    try {
+      console.log("payloaaaaaaaaaad request Donor", payload);
+      const url = `http://localhost:3001/requestdonor`;
+
+      const userData = await axios.post(url, payload);
+      console.log("here", payload);
+      console.log(userData);
+      return [userData.data, null];
+    } catch (error) {
+      const err = rejectWithValue(error).payload.response.data;
+      return [null, err];
+    }
+  }
+);
+
+export const approveRequest = createAsyncThunk(
+  "post/approveRequest",
+  async (payload, { rejectWithValue }) => {
+    try {
+      console.log("payloaaaaaaaaaad request Donor", payload);
+      const url = `http://localhost:3001/donorfulldata/${payload}`;
+
+      const userData = await axios.post(url);
+      // console.log("here", payload);
+      console.log("datatattatatatatat", userData);
+      return [userData.data, null];
+    } catch (error) {
+      const err = rejectWithValue(error).payload.response.data;
+      return [null, err];
+    }
+  }
+);
+
+export const totalRequest = createAsyncThunk(
+  "post/approveRequest",
+  async (payload, { rejectWithValue }) => {
+    try {
+      console.log("payloaaaaaaaaaad request Donor", payload);
+      const url = `http://localhost:3001/totalrequest`;
+
+      const userData = await axios.post(url, payload);
+      // console.log("here", payload);
+      console.log("datatattatatatatat", userData);
+      return [userData.data, null];
+    } catch (error) {
+      const err = rejectWithValue(error).payload.response.data;
+      return [null, err];
+    }
+  }
+);
+
 export const logout = createAsyncThunk(
   "post/logout",
   async (payload, { rejectWithValue }) => {
@@ -180,6 +234,9 @@ const initialState = {
   token: null,
   signUp: [],
   donors: [],
+  donorRequest: [],
+  donorApproved: [],
+  totalRequest: [],
 };
 const userDetailSlice = createSlice({
   initialState,
@@ -265,8 +322,10 @@ const userDetailSlice = createSlice({
       state.auth = false;
       state.token = null;
       const [userData, error] = action.payload;
-
+      state.donors = [];
       state.userData = [];
+      state.donorRequest = [];
+      state.donorApproved = [];
     },
     [becomeDonor.fulfilled]: (state, action) => {
       state.loading = false;
@@ -317,6 +376,45 @@ const userDetailSlice = createSlice({
       }
     },
     [searchDonor.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [requestDonor.fulfilled]: (state, action) => {
+      state.loading = false;
+      const [userData, error] = action.payload;
+      if (!error) {
+        state.donorRequest = userData.result;
+      } else {
+        state.error = error;
+      }
+    },
+    [requestDonor.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [approveRequest.fulfilled]: (state, action) => {
+      state.loading = false;
+      const [userData, error] = action.payload;
+      if (!error) {
+        state.donorApproved = userData.result;
+      } else {
+        state.error = error;
+      }
+    },
+    [approveRequest.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [totalRequest.fulfilled]: (state, action) => {
+      state.loading = false;
+      const [userData, error] = action.payload;
+      if (!error) {
+        state.totalRequest = userData.result;
+      } else {
+        state.error = error;
+      }
+    },
+    [totalRequest.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },

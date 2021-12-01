@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { BiDonateBlood } from "react-icons/bi";
 import { logout } from "../redux/authSlice";
-
+import { totalRequest } from "../redux/authSlice";
 import { Link, useHistory } from "react-router-dom";
 import { Input } from "antd";
 import { becomeDonor } from "../redux/authSlice";
@@ -19,6 +19,10 @@ const Bloodbank = () => {
   console.log("Blooddbank", userData);
   const { userid, role } = userData;
   console.log(userid);
+
+  useEffect(() => {
+    dispatch(totalRequest({ userid: userid }));
+  }, []);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -52,75 +56,78 @@ const Bloodbank = () => {
     <>
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
           height: "100vh",
-          flexDirection: "column",
-          gap: "40px",
+          padding: "4rem",
         }}
       >
-        <div>
-          <BiDonateBlood size={120} color="red" />
-          <h1>Blood Bank</h1>
-        </div>
         <div
           style={{
-            width: "100%",
             display: "flex",
-            justifyContent: "flex-end",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          <Button
-            type="primary"
-            onClick={userProfile}
-            style={{ marginRight: "20px" }}
+          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <BiDonateBlood size={80} color="red" />
+            <h1 style={{ margin: 0 }}>Blood Bank</h1>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              alignItems: "center",
+            }}
           >
-            User Profile
-          </Button>
+            <div
+              style={{
+                display: "flex",
+                gap: "20px",
+              }}
+            >
+              <Button type="primary" onClick={userProfile}>
+                User Profile
+              </Button>
 
-          <Button type="primary" onClick={logOut}>
-            Logout
-          </Button>
+              <Button type="primary" onClick={logOut}>
+                Logout
+              </Button>
+            </div>
+            <div>
+              <Button
+                type="primary"
+                onClick={showModal}
+                disabled={role === "Donor" ? true : false}
+              >
+                {" "}
+                Become a donor
+              </Button>
+              <Modal
+                title="Become a Donor"
+                visible={isModalVisible}
+                onOk={handleOk}
+                onCancel={handleCancel}
+              >
+                <p>Are you sure you want to become a donor?</p>
+                <p>
+                  If you become a donor your data will be visible to other
+                  users.
+                </p>
+                <p>If you become a donor you can donate blood.</p>
+              </Modal>
+            </div>
+          </div>
         </div>
-        {/* <div>
-          <Search
-            placeholder="Search for Donors"
-            enterButton="Search"
-            size="large"
-          />
-        </div> */}
-        {/* <div>
-          <Search
-            placeholder="Search for Donors"
-            enterButton="Search"
-            size="large"
-          />
-        </div> */}
-        <SearchDonor />
-        <div
-          style={{ width: "100%", display: "flex", justifyContent: "center" }}
-        >
-          <Button
-            type="primary"
-            onClick={showModal}
-            disabled={role === "Donor" ? true : false}
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div
+            style={{
+              width: "50%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            {" "}
-            Become a donor
-          </Button>
-          <Modal
-            title="Become a Donor"
-            visible={isModalVisible}
-            onOk={handleOk}
-            onCancel={handleCancel}
-          >
-            <p>Are you sure you want to become a donor?</p>
-            <p>
-              If you become a donor your data will be visible to other users.
-            </p>
-            <p>If you become a donor you can donate blood.</p>
-          </Modal>
+            <SearchDonor />
+          </div>
         </div>
       </div>
     </>

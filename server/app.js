@@ -80,6 +80,6 @@ app.use("/donors", donors);
 app.use("/userlogout", logoutUser);
 app.use("/logout", logout);
 
-const server = app.listen(3001, function () {
+app.listen(3001, function () {
   console.log("server started");
 });

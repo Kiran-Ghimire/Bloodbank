@@ -55,17 +55,8 @@ const EditProfile = () => {
   const userData = useSelector((state) => state.authUser.userData[0]);
 
   console.log("editProfile", userData);
-  const {
-    userid,
-    username,
-    email,
-    dob,
-    gender,
-    address,
-    bloodtype,
-    phone,
-    role,
-  } = userData;
+  const { userid, username, email, dob, gender, address, bloodtype, phone } =
+    userData;
   const history = useHistory();
   const onFinish = (values) => {
     console.log("values", values);
@@ -100,7 +91,6 @@ const EditProfile = () => {
             address,
             bloodtype,
             phone,
-            role,
           }}
           {...formItemLayout}
           form={form}
@@ -277,7 +267,7 @@ const EditProfile = () => {
               <Option value="other">Other</Option>
             </Select>
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             name="role"
             label="Role"
             rules={[
@@ -291,7 +281,7 @@ const EditProfile = () => {
               <Option value="User">User</Option>
               <Option value="Donor">Donor</Option>
             </Select>
-          </Form.Item>
+          </Form.Item> */}
 
           {/* <Form.Item
             name="agreement"

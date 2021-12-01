@@ -39,23 +39,24 @@ const Profile = () => {
           <p>Address: {address}</p>
           <p>Bloodtype: {bloodtype}</p>
           <p>Phone: {phone}</p>
-          <p>Role: {role}</p>
         </Card>
       </div>
-      <Button
-        type="primary"
-        onClick={editProfile}
-        style={{ marginRight: "20px" }}
-      >
-        Edit Profile
-      </Button>
-      <Button
-        type="primary"
-        onClick={changePassword}
-        style={{ marginRight: "20px" }}
-      >
-        Change Password
-      </Button>
+      <div style={{ display: "flex", gap: "20px" }}>
+        <Button
+          type="primary"
+          onClick={editProfile}
+          style={{ marginRight: "20px" }}
+        >
+          Edit Profile
+        </Button>
+        <Button
+          type="primary"
+          onClick={changePassword}
+          style={{ marginRight: "20px" }}
+        >
+          Change Password
+        </Button>
+      </div>
     </div>
   );
 };

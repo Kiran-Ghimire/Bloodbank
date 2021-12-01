@@ -36,34 +36,6 @@ router.get("/", function (req, res) {
   });
 });
 
-// router.use(express.urlencoded({ extended: true }));
-// router.use(express.json());
-
-// router.get("/addUser", function (req, res) {
-//   db.getalldept(function (err, result) {
-//     res.render("user/addUser.ejs", { list: result });
-//   });
-// });
-
-// router.post("/addUser", upload.single("image"), function (req, res) {
-//   db.add_doctor(
-//     req.body.first_name,
-//     req.body.last_name,
-//     req.body.email,
-//     req.body.dob,
-//     req.body.gender,
-//     req.body.address,
-//     req.body.phone,
-//     req.file.filename,
-//     req.body.department,
-//     req.body.biography
-//   );
-//   if (db.add_doctor) {
-//     console.log("1 doctor inserted");
-//   }
-//   res.redirect("/users");
-// });
-
 router.get("/editUser/:id", function (req, res) {
   const id = req.params.id;
 
@@ -84,7 +56,7 @@ router.post("/editUser/:id", function (req, res) {
     req.body.gender,
     req.body.bloodtype,
     req.body.address,
-    req.body.role,
+
     req.body.emailstatus,
 
     function (err, result) {

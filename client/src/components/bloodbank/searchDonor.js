@@ -1,8 +1,9 @@
 import { Form, Input, Button, Select } from "antd";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { searchDonor } from "../redux/authSlice";
 import DonorDetailCard from "./donorDetailCard";
-import moment from "moment";
+
 const { Option } = Select;
 const layout = {
   labelCol: {
@@ -23,7 +24,8 @@ const SearchDonor = () => {
   const dispatch = useDispatch();
   const donors = useSelector((state) => state.authUser.donors);
   const [form] = Form.useForm();
-
+  const donorRequest = useSelector((state) => state.authUser.donorRequest);
+  const { userid } = donorRequest;
   const onFinish = (values) => {
     console.log(values);
     dispatch(searchDonor(values));

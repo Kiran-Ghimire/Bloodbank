@@ -25,8 +25,8 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <% for (let i = 0; i < list.length; i++){ %>
-                                        <label>Username <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" name="username" value="<%= list[i].username %>">
+                                        <label>Donor Name <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" name="donorname" value="<%= list[i].donorname %>">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -49,9 +49,9 @@
 								<div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Phone</label>
-                                        <div class="cal-icon">
+                                        
                                             <input type="text" class="form-control datetimepicker" name="phone" value="<%= list[i].phone %>">
-                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="col-sm-6">

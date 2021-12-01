@@ -27,7 +27,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-    const role = "User";
+
     const emailstatus = "not_verified";
     const reqstatus = "idle";
     const {
@@ -63,7 +63,7 @@ router.post(
               gender,
               bloodtype,
               address,
-              role,
+
               emailstatus,
               reqstatus,
               (err, result) => {

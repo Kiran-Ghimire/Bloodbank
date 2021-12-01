@@ -30,13 +30,13 @@ module.exports.signup = function (
   gender,
   bloodtype,
   address,
-  role,
+
   emailstatus,
   reqstatus,
   callback
 ) {
   const query =
-    "INSERT INTO `user`(`username`,`email`,`password`, `dob`, `phone`, `gender`, `bloodtype`, `address`, `role`, `emailstatus`, `reqstatus`) VALUES ('" +
+    "INSERT INTO `user`(`username`,`email`,`password`, `dob`, `phone`, `gender`, `bloodtype`, `address`,  `emailstatus`, `reqstatus`) VALUES ('" +
     username +
     "','" +
     email +
@@ -52,8 +52,6 @@ module.exports.signup = function (
     bloodtype +
     "','" +
     address +
-    "','" +
-    role +
     "', '" +
     emailstatus +
     "','" +
@@ -289,8 +287,13 @@ module.exports.editUserProfile = function (
   console.log(query);
 };
 
-module.exports.getUserbyId = function (id, callback) {
-  const query = "select * from user where userid =" + id + "";
+module.exports.getUserbyId = function (userid, donorid, callback) {
+  const query =
+    "select * from reqstatus where userid =" +
+    userid +
+    " and donorid =" +
+    donorid +
+    " ";
   con.query(query, callback);
   console.log("getUserbyId", query);
 };
@@ -304,7 +307,7 @@ module.exports.editUser = function (
   gender,
   bloodtype,
   address,
-  role,
+
   emailstatus,
   callback
 ) {
@@ -323,8 +326,6 @@ module.exports.editUser = function (
     bloodtype +
     "', `address` = '" +
     address +
-    "', `role` = '" +
-    role +
     "', `emailstatus`= '" +
     emailstatus +
     "' where userid=" +
@@ -393,19 +394,18 @@ module.exports.becomeDonor = function (id, callback) {
 // UPDATE `user` SET `role` = 'Donor' WHERE `user`.`userid` = 36;
 
 module.exports.getAllDonor = function (callback) {
-  const query = "select * from user where role= 'Donor'";
+  const query = "select * from donor";
   con.query(query, callback);
 };
 
 module.exports.getDonorbyId = function (id, callback) {
-  const query = "select * from user where role='Donor' and userid =" + id;
+  const query = "select * from donor where donorid =" + id;
   con.query(query, callback);
   console.log(query);
 };
 
-module.exports.editDonor = function (
-  id,
-  username,
+module.exports.addDonor = function (
+  donorname,
   email,
   dob,
   phone,
@@ -415,8 +415,39 @@ module.exports.editDonor = function (
   callback
 ) {
   const query =
-    "update `user` set `username`='" +
-    username +
+    "Insert into `donor` (`donorname`,`email`,`dob`,`phone`,`gender`,`bloodtype`, `address`) values ('" +
+    donorname +
+    "','" +
+    email +
+    "','" +
+    dob +
+    "','" +
+    phone +
+    "','" +
+    gender +
+    "','" +
+    bloodtype +
+    "', '" +
+    address +
+    "')";
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.editDonor = function (
+  id,
+  donorname,
+  email,
+  dob,
+  phone,
+  gender,
+  bloodtype,
+  address,
+  callback
+) {
+  const query =
+    "update `donor` set `donorname`='" +
+    donorname +
     "', `email`= '" +
     email +
     "', `dob`= '" +
@@ -429,32 +460,31 @@ module.exports.editDonor = function (
     bloodtype +
     "', `address` = '" +
     address +
-    "' where userid=" +
+    "' where donorid=" +
     id;
   con.query(query, callback);
   console.log(query);
 };
 
 module.exports.deleteDonor = function (id, callback) {
-  const query = "delete  from user where role='Donor' and userid =" + id;
+  const query = "delete  from donor where  donorid =" + id;
   con.query(query, callback);
   console.log(query);
 };
 
 module.exports.searchDonor = function (key, callback) {
-  const query =
-    'SELECT  * from user where username like "%' + key + '%" and role="Donor"';
+  const query = 'SELECT  * from donor where donorname like "%' + key + '%"';
   con.query(query, callback);
   console.log(query);
 };
 
 module.exports.searchDonorUser = function (key1, key2, callback) {
   const query =
-    'SELECT  * from user where  role="Donor" and   address like "%' +
+    'SELECT * from donor where address like "%' +
     key1 +
-    '%"  and bloodtype like "%' +
+    '%" and bloodtype like "%' +
     key2 +
-    '%" ';
+    '%"; ';
   con.query(query, callback);
   console.log(query);
 };
@@ -472,19 +502,27 @@ module.exports.changePassword = function (id, hash, callback) {
   console.log(query);
 };
 
-module.exports.updateReqStatus = function (id, reqstatus, callback) {
+module.exports.updateReqStatus = function (
+  userid,
+  donorid,
+  reqstatus,
+  callback
+) {
   const query =
-    "update `user` set `reqstatus`='" +
+    "update `reqstatus` set `reqstatus`='" +
     reqstatus +
     "' where `userid`='" +
-    id +
+    userid +
+    "' and  `donorid`= '" +
+    donorid +
     "'";
   con.query(query, callback);
   console.log(query);
 };
 
 module.exports.totalReqStatus = function (callback) {
-  const query = "select * from user where reqstatus= 'Requested'";
+  const query =
+    "SELECT reqstatus.userid, reqstatus.reqstatus, donor.donorid, donor.donorname, donor.email, donor.dob, donor.bloodtype, donor.phone, donor.gender, donor.address FROM donor  JOIN reqstatus ON donor.donorid = reqstatus.donorid where reqstatus.reqstatus='Requested'";
   con.query(query, callback);
   console.log(query);
 };
@@ -494,6 +532,54 @@ module.exports.totalReqApproved = function (id, callback) {
     "select username, email, dob, phone, address, bloodtype, gender from user where reqstatus= 'Approved' and userid='" +
     id +
     "";
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.reqStatus = function (
+  donorid,
+  userid,
+  reqstatus,
+
+  callback
+) {
+  const query =
+    "INSERT INTO `reqstatus`(`donorid`, `userid`, `reqstatus`) VALUES ('" +
+    donorid +
+    "', '" +
+    userid +
+    "', '" +
+    reqstatus +
+    "' )";
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.getFullDonorInfo = function (userid, callback) {
+  const query =
+    "SELECT reqstatus.userid, reqstatus.reqstatus, donor.donorid, donor.donorname, donor.email, donor.dob, donor.bloodtype, donor.phone, donor.gender, donor.address FROM donor  JOIN reqstatus ON donor.donorid = reqstatus.donorid where reqstatus.reqstatus='Approved' and reqstatus.userid= '" +
+    userid +
+    "' ";
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.getRequestUser = function (userid, reqstatus, callback) {
+  const query =
+    "SELECT reqstatus.userid, reqstatus.reqstatus, donor.donorid, donor.donorname, donor.email, donor.dob, donor.bloodtype, donor.phone, donor.gender, donor.address FROM donor  JOIN reqstatus ON donor.donorid = reqstatus.donorid where reqstatus.reqstatus='" +
+    reqstatus +
+    "' and  reqstatus.userid= '" +
+    userid +
+    "' ";
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.getAllRequest = function (userid, callback) {
+  const query =
+    "SELECT reqstatus.userid, reqstatus.reqstatus, donor.donorid, donor.donorname, donor.email, donor.dob, donor.bloodtype, donor.phone, donor.gender, donor.address FROM donor  JOIN reqstatus ON donor.donorid = reqstatus.donorid where  reqstatus.userid= '" +
+    userid +
+    "' ";
   con.query(query, callback);
   console.log(query);
 };

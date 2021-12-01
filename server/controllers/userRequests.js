@@ -19,43 +19,37 @@ router.get("/userrequests", function (req, res) {
   });
 });
 
-// router.get("/addrequest", function (req, res) {
-//   res.render("userRequest/addRequest.ejs");
-// });
-
-// router.post("/addrequest", function (req, res) {
-//   var name = req.body.name;
-//   var p_date = req.body.p_date;
-//   var expire = req.body.expire;
-//   var e_date = req.body.e_date;
-//   var price = req.body.price;
-//   var quantity = req.body.quantity;
-
-//   db.addMed(
-//     name,
-//     p_date,
-//     expire,
-//     e_date,
-//     price,
-//     quantity,
-//     function (err, result) {
-//       res.redirect("/userrequests");
-//     }
-//   );
-// });
-
-router.get("/approverequest/:id", function (req, res) {
-  const id = req.params.id;
-  db.getUserbyId(id, function (err, result) {
+router.get("/approverequest/:userid/:donorid", function (req, res) {
+  const { userid, donorid } = req.params;
+  console.log("alu", req.params);
+  db.getUserbyId(userid, donorid, function (err, result) {
+    console.log(result);
     res.render("userRequest/approveRequest.ejs", { list: result });
   });
 });
 
-router.post("/approverequest/:id", function (req, res) {
-  const id = req.params.id;
+router.post("/approverequest/:userid/:donorid", function (req, res) {
+  const { userid, donorid } = req.params;
+  console.log("matar", req.params);
   const reqstatus = "Approved";
-  db.updateReqStatus(id, reqstatus, function (err, result) {
-    res.redirect("/userrequests");
+  db.updateReqStatus(userid, donorid, reqstatus, function (err, result) {
+    if (err) throw err;
+    console.log("HALO", result);
+
+    db.getFullDonorInfo(userid, (err, result) => {
+      if (err) throw err;
+      res.status(200).json({ result: result });
+    });
+
+    // res.redirect("/userrequests");
+  });
+});
+
+router.post("/donorfulldata/:userid", function (req, res) {
+  const { userid } = req.params;
+  db.getFullDonorInfo(userid, (err, result) => {
+    if (err) throw err;
+    res.status(200).json({ result: result });
   });
 });
 

@@ -13,7 +13,6 @@ router.post("/editprofile", function (req, res) {
     req.body.values.gender,
     req.body.values.bloodtype,
     req.body.values.address,
-    req.body.values.role,
 
     console.log("reqbody", req.body),
     console.log("values", req.body.values, req.body.id),

@@ -20,31 +20,35 @@ router.get("/", function (req, res) {
   });
 });
 
-// router.get("/adddonor", function (req, res) {
-//   res.render("donor/addDonor.ejs");
-// });
+router.get("/adddonor", function (req, res) {
+  res.render("donor/addDonor.ejs");
+});
 
-// router.post("/adddonor", function (req, res) {
-//   const name = req.body.name;
-//   const email = req.body.email;
-//   const contact = req.body.contact;
-//   const join_date = req.body.date;
-//   const role = req.body.role;
-//   const salary = req.body.salary;
+router.post("/adddonor", function (req, res) {
+  const donorname = req.body.donorname;
+  const email = req.body.email;
+  const dob = req.body.dob;
+  const phone = req.body.phone;
+  const gender = req.body.gender;
+  const bloodtype = req.body.bloodtype;
+  const address = req.body.address;
 
-//   db.add_employee(
-//     name,
-//     email,
-//     contact,
-//     join_date,
-//     role,
-//     salary,
-//     function (err, result) {
-//       console.log("Donor inserted!!");
-//       res.redirect("/donors");
-//     }
-//   );
-// });
+  db.addDonor(
+    donorname,
+    email,
+    dob,
+    phone,
+    gender,
+    bloodtype,
+    address,
+    function (err, result) {
+      if (err) throw err;
+      console.log("Donor inserted!!");
+      // console.log("resulttttttttttttt", result);
+      res.redirect("/donors");
+    }
+  );
+});
 
 router.get("/editdonor/:id", function (req, res) {
   const id = req.params.id;
@@ -58,7 +62,7 @@ router.post("/editdonor/:id", function (req, res) {
   const id = req.params.id;
   db.editDonor(
     id,
-    req.body.username,
+    req.body.donorname,
     req.body.email,
     req.body.dob,
     req.body.phone,
