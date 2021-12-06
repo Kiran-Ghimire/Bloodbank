@@ -37,6 +37,12 @@ router.post(
       email_status
     );
     const token = randomToken(8);
+    db.findUserVerifyAdmin(id, (err, result) => {
+      console.log("result", result);
+      if (result) {
+        db.updateVerifyAdmin(id, token);
+      }
+    });
 
     db.verifyAdmin(req.body.username, email, token);
 

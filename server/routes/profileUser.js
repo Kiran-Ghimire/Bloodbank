@@ -26,7 +26,7 @@ router.post("/editprofile", function (req, res) {
       // res.status(200).json({ result: result });
     }
   );
-  db.getUserbyId(req.body.id, function (err, result) {
+  db.getUser(req.body.id, function (err, result) {
     if (err) throw err;
     console.log("RESULTTTTTTTTTTTT", result);
 

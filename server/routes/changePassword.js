@@ -21,16 +21,13 @@ router.post("/changepassword", async function (req, res) {
     if (result[0].password === password) {
       bcrypt.hash(newpassword, saltRounds, (err, hash) => {
         db.changePassword(id, hash, (err, result) => {
-          if (result) {
-            console.log(result);
-            db.getUserPw(id, function (err, result) {
-              if (err) throw err;
-              console.log(result);
-              res.status(200).json({ result: result });
-            });
-          } else {
-            res.send("There was some error");
-          }
+          if (err) throw err;
+          console.log(result);
+        });
+        db.getUserPw(id, function (err, result) {
+          if (err) throw err;
+          console.log(result);
+          res.status(200).json({ result: result });
         });
       });
     } else {

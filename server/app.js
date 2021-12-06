@@ -1,16 +1,8 @@
 const express = require("express");
-const session = require("express-session");
+
 const cookie = require("cookie-parser");
 const cors = require("cors");
 
-const ejs = require("ejs");
-const multer = require("multer");
-const path = require("path");
-const async = require("async");
-const nodmailer = require("nodemailer");
-const crypto = require("crypto");
-const expressValidator = require("express-validator");
-const sweetalert = require("sweetalert2");
 const app = express();
 
 const bodyParser = require("body-parser");
@@ -21,7 +13,7 @@ const signup = require("./controllers/signup");
 const home = require("./controllers/home");
 
 const users = require("./controllers/users");
-const db = require("./models/db_controller");
+
 const reset = require("./controllers/reset_controller");
 const set = require("./controllers/set_controller");
 const donors = require("./controllers/donors.js");
@@ -34,7 +26,7 @@ const loginUser = require("./routes/login");
 const logoutUser = require("./routes/logout");
 const userPasswordReset = require("./routes/resetPassword");
 const userSetPassword = require("./routes/setPassword");
-const becomeDonor = require("./routes/becomeDonor");
+// const becomeDonor = require("./routes/becomeDonor");
 const profileUser = require("./routes/profileUser");
 const changePassword = require("./routes/changePassword");
 const searchDonor = require("./routes/searchDonorUser");
@@ -75,7 +67,7 @@ app.use(requestAdmin);
 app.use(userRequests);
 app.use("/users", users);
 
-app.use(becomeDonor);
+// app.use(becomeDonor);
 app.use("/donors", donors);
 app.use("/userlogout", logoutUser);
 app.use("/logout", logout);

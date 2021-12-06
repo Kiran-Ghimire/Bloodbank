@@ -2,7 +2,9 @@ import { Form, Input, Button, Select } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { searchDonor } from "../redux/authSlice";
+import ApprovedCard from "./approvedCard";
 import DonorDetailCard from "./donorDetailCard";
+import RequestedCard from "./requestedCard";
 
 const { Option } = Select;
 const layout = {
@@ -23,9 +25,13 @@ const tailLayout = {
 const SearchDonor = () => {
   const dispatch = useDispatch();
   const donors = useSelector((state) => state.authUser.donors);
+  console.log(donors.filter((i) => i.donorid));
   const [form] = Form.useForm();
-  const donorRequest = useSelector((state) => state.authUser.donorRequest);
-  const { userid } = donorRequest;
+
+  const totalRequest = useSelector((state) => state.authUser.totalRequest);
+
+  const donorSearch = totalRequest.map((i) => i.donorid);
+
   const onFinish = (values) => {
     console.log(values);
     dispatch(searchDonor(values));
@@ -76,7 +82,29 @@ const SearchDonor = () => {
           </Button>
         </Form.Item>
       </Form>
-      {donors ? <DonorDetailCard donors={donors} /> : null}
+      {donors ? (
+        <DonorDetailCard donors={donors} donorSearch={donorSearch} />
+      ) : null}
+      <div>
+        <div
+          style={{
+            display: "flex",
+            gap: "500px",
+          }}
+        >
+          <div>
+            <h1>Approved Values</h1>
+            {totalRequest ? <ApprovedCard totalRequest={totalRequest} /> : null}
+          </div>
+
+          <div>
+            <h1>Requested Values </h1>
+            {totalRequest ? (
+              <RequestedCard totalRequest={totalRequest} />
+            ) : null}
+          </div>
+        </div>
+      </div>
     </>
   );
 };

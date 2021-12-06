@@ -30,13 +30,11 @@ module.exports.signup = function (
   gender,
   bloodtype,
   address,
-
   emailstatus,
-  reqstatus,
   callback
 ) {
   const query =
-    "INSERT INTO `user`(`username`,`email`,`password`, `dob`, `phone`, `gender`, `bloodtype`, `address`,  `emailstatus`, `reqstatus`) VALUES ('" +
+    "INSERT INTO `user`(`username`,`email`,`password`, `dob`, `phone`, `gender`, `bloodtype`, `address`,  `emailstatus`) VALUES ('" +
     username +
     "','" +
     email +
@@ -54,8 +52,6 @@ module.exports.signup = function (
     address +
     "', '" +
     emailstatus +
-    "','" +
-    reqstatus +
     "' )";
   con.query(query, callback);
 };
@@ -127,8 +123,32 @@ module.exports.findTemp = function (id, callback) {
   console.log(query);
 };
 
+module.exports.findTempAdmin = function (id, callback) {
+  const query = "select * from tempadmin where id='" + id + "'";
+  con.query(query, callback);
+  console.log(query);
+};
+
 module.exports.findUserVerify = function (id, callback) {
   const query = "select * from verify where id='" + id + "'";
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.findUserVerifyAdmin = function (id, callback) {
+  const query = "select * from verifyadmin where id='" + id + "'";
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.updateVerify = function (id, token, callback) {
+  const query = "update verify set token ='" + token + "' where id=" + id;
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.updateVerifyAdmin = function (id, token, callback) {
+  const query = "update verifyadmin set token ='" + token + "' where id=" + id;
   con.query(query, callback);
   console.log(query);
 };
@@ -178,7 +198,7 @@ module.exports.signupAdmin = function (
 };
 
 module.exports.getuseridAdmin = function (email, callback) {
-  const query = "select *from verifyadmin where email = '" + email + "' ";
+  const query = "select * from verifyadmin where email = '" + email + "' ";
   con.query(query, callback);
 };
 
@@ -235,6 +255,12 @@ module.exports.updateTemp = function (id, token, callback) {
   console.log(query);
 };
 
+module.exports.updateTempAdmin = function (id, token, callback) {
+  const query = "update tempadmin set token ='" + token + "' where id=" + id;
+  con.query(query, callback);
+  console.log(query);
+};
+
 module.exports.checktokenAdmin = function (token, callback) {
   const query = "select * from tempadmin where token='" + token + "'";
   con.query(query, callback);
@@ -261,7 +287,7 @@ module.exports.editUserProfile = function (
   gender,
   bloodtype,
   address,
-  role,
+
   callback
 ) {
   const query =
@@ -279,8 +305,6 @@ module.exports.editUserProfile = function (
     bloodtype +
     "', `address` = '" +
     address +
-    "', `role` = '" +
-    role +
     "' where userid=" +
     id;
   con.query(query, callback);
@@ -293,9 +317,15 @@ module.exports.getUserbyId = function (userid, donorid, callback) {
     userid +
     " and donorid =" +
     donorid +
-    " ";
+    "";
   con.query(query, callback);
   console.log("getUserbyId", query);
+};
+
+module.exports.getUser = function (id, callback) {
+  const query = "select * from user where userid =" + id + " ";
+  con.query(query, callback);
+  console.log("getUser", query);
 };
 
 module.exports.editUser = function (
@@ -564,6 +594,15 @@ module.exports.getFullDonorInfo = function (userid, callback) {
   console.log(query);
 };
 
+module.exports.getFullDonorInfoDeclined = function (userid, callback) {
+  const query =
+    "SELECT reqstatus.userid, reqstatus.reqstatus, donor.donorid, donor.donorname, donor.email, donor.dob, donor.bloodtype, donor.phone, donor.gender, donor.address FROM donor  JOIN reqstatus ON donor.donorid = reqstatus.donorid where reqstatus.reqstatus='Declined' and reqstatus.userid= '" +
+    userid +
+    "' ";
+  con.query(query, callback);
+  console.log(query);
+};
+
 module.exports.getRequestUser = function (userid, reqstatus, callback) {
   const query =
     "SELECT reqstatus.userid, reqstatus.reqstatus, donor.donorid, donor.donorname, donor.email, donor.dob, donor.bloodtype, donor.phone, donor.gender, donor.address FROM donor  JOIN reqstatus ON donor.donorid = reqstatus.donorid where reqstatus.reqstatus='" +
@@ -582,4 +621,24 @@ module.exports.getAllRequest = function (userid, callback) {
     "' ";
   con.query(query, callback);
   console.log(query);
+};
+
+module.exports.searchRequestUser = function (key, callback) {
+  const query =
+    'SELECT reqstatus.userid, reqstatus.reqstatus, donor.donorid, donor.donorname, donor.email, donor.dob, donor.bloodtype, donor.phone, donor.gender, donor.address FROM donor  JOIN reqstatus ON donor.donorid = reqstatus.donorid where reqstatus.reqstatus="Requested" and  reqstatus.userid like "%' +
+    key +
+    '%"  ';
+  con.query(query, callback);
+  console.log(query);
+};
+
+module.exports.getReqUserbyId = function (userid, donorid, callback) {
+  const query =
+    "select * from reqstatus where userid =" +
+    userid +
+    " and donorid =" +
+    donorid +
+    " and reqstatus='Requested'";
+  con.query(query, callback);
+  console.log("getUserbyId", query);
 };

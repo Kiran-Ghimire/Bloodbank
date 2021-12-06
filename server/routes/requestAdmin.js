@@ -4,8 +4,9 @@ const db = require.main.require("./models/database");
 
 router.post("/requestdonor", (req, res) => {
   const reqstatus = "Requested";
-  const { userid, donorid } = req.body;
   console.log(req.body);
+  const { donorid, userid } = req.body;
+
   db.reqStatus(donorid, userid, reqstatus, (err, result) => {
     if (err) throw err;
     db.getRequestUser(userid, reqstatus, function (err, result) {
@@ -13,6 +14,7 @@ router.post("/requestdonor", (req, res) => {
       console.log(result);
       res.status(200).json({ result: result });
     });
+    console.log(result);
   });
 });
 

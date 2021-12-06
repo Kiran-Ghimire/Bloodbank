@@ -24,18 +24,19 @@ const Bloodbank = () => {
     dispatch(totalRequest({ userid: userid }));
   }, []);
 
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
+  // const showModal = () => {
+  //   setIsModalVisible(true);
+  // };
 
-  const handleOk = () => {
-    dispatch(becomeDonor(userid));
-    setIsModalVisible(false);
-  };
+  // const handleOk = () => {
+  //   dispatch(becomeDonor(userid));
+  //   setIsModalVisible(false);
+  // };
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
+  // const handleCancel = () => {
+  //   setIsModalVisible(false);
+  // };
+
   const history = useHistory();
 
   //   const userData = useSelector((state) => state.authUser.userData);
@@ -93,15 +94,15 @@ const Bloodbank = () => {
               </Button>
             </div>
             <div>
-              <Button
+              {/* <Button
                 type="primary"
                 onClick={showModal}
                 disabled={role === "Donor" ? true : false}
               >
                 {" "}
                 Become a donor
-              </Button>
-              <Modal
+              </Button> */}
+              {/* <Modal
                 title="Become a Donor"
                 visible={isModalVisible}
                 onOk={handleOk}
@@ -113,7 +114,7 @@ const Bloodbank = () => {
                   users.
                 </p>
                 <p>If you become a donor you can donate blood.</p>
-              </Modal>
+              </Modal> */}
             </div>
           </div>
         </div>

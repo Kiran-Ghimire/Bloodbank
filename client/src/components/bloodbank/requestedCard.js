@@ -1,23 +1,14 @@
 import { Card, Button } from "antd";
-import { useSelector, useDispatch } from "react-redux";
-import { requestDonor, totalRequest as totalReq } from "../redux/authSlice";
-
 import moment from "moment";
+import { useSelector, useDispatch } from "react-redux";
+import { approveRequest } from "../redux/authSlice";
 import { useEffect, useState } from "react";
-const DonorDetailCard = ({ donors, donorSearch }) => {
-  const userData = useSelector((state) => state.authUser.userData[0]);
 
-  const donorRequest = useSelector((state) => state.authUser.donorRequest);
+const RequestedCard = ({ totalRequest }) => {
   const [state, setState] = useState();
-  const [disable, setDisable] = useState(false);
-  const dispatch = useDispatch();
-  const { userid } = userData;
-
   useEffect(() => {
-    donors?.length > 0 && setState(donors);
-    console.log(donors);
-  }, [donors]);
-
+    totalRequest?.length > 0 && setState(totalRequest);
+  }, [totalRequest]);
   return (
     <div
       style={{
@@ -27,8 +18,9 @@ const DonorDetailCard = ({ donors, donorSearch }) => {
         flexWrap: "wrap",
       }}
     >
-      {state?.map((donor) =>
-        !donorSearch.includes(donor.donorid) ? (
+      {state
+        ?.filter((i) => i.reqstatus === "Requested")
+        .map((donor) => (
           <Card style={{ width: 300 }}>
             <p>Username: {donor.donorname}</p>
             <p>Email: {donor.email}</p>
@@ -42,13 +34,15 @@ const DonorDetailCard = ({ donors, donorSearch }) => {
             <Button
               type="primary"
               htmlType="submit"
-              onClick={() => {
-                dispatch(
-                  requestDonor({ userid: userid, donorid: donor.donorid })
-                );
-                setDisable(true);
-              }}
-              // disabled={disable}
+              // onClick={() => {
+              //   dispatch(
+              //     requestDonor({ userid: userid, donorid: donor.donorid })
+              //   );
+              //   dispatch(totalReq({ userid: userid }));
+              // }}
+              disabled={
+                donor.reqstatus == "Approved" || "Requested" ? true : false
+              }
             >
               Request to Admin
             </Button>
@@ -56,10 +50,9 @@ const DonorDetailCard = ({ donors, donorSearch }) => {
           //   ""
           // )} */}
           </Card>
-        ) : null
-      )}
+        ))}
     </div>
   );
 };
 
-export default DonorDetailCard;
+export default RequestedCard;

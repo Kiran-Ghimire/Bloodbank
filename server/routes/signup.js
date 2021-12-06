@@ -63,9 +63,8 @@ router.post(
               gender,
               bloodtype,
               address,
-
               emailstatus,
-              reqstatus,
+
               (err, result) => {
                 if (err) {
                   console.log(err);
@@ -77,6 +76,13 @@ router.post(
 
             console.log("Signup DOneeeeeee!!");
             const token = randomToken(8);
+
+            db.findUserVerify(id, (err, result) => {
+              console.log("result", result);
+              if (result) {
+                db.updateVerify(id, token);
+              }
+            });
 
             db.verify(username, email, token);
 
@@ -99,7 +105,7 @@ router.post(
                 token +
                 `</li>
             </ul>
-            <p>verify Link: <a href="http://localhost:3001/verify">Verify</a></p>
+            <p>verify Link: <a href="http://localhost:3000/verify">Verify</a></p>
             
             <p><strong>This is an automatically generated mail. Please do not reply back.</strong></p>
             

@@ -44,7 +44,7 @@ router.post("/userresetpassword", function (req, res) {
         token +
         `</li>
             </ul>
-            <p>Login Link: <a href="http://localhost:3001/login">LOGIN</a></p>
+            <p>Login Link: <a href="http://localhost:3000/setPassword">LOGIN</a></p>
             <p>You may change your password after you login under the section - ACCOUNT SETTINGS</p>
             <p><strong>This is an automatically generated mail. Please do not reply back.</strong></p>
             

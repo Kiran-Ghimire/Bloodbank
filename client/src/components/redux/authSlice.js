@@ -326,6 +326,7 @@ const userDetailSlice = createSlice({
       state.userData = [];
       state.donorRequest = [];
       state.donorApproved = [];
+      state.totalRequest = [];
     },
     [becomeDonor.fulfilled]: (state, action) => {
       state.loading = false;

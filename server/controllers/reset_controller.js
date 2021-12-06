@@ -23,6 +23,12 @@ router.post("/", function (req, res) {
     const id = result1[0].id;
     const email = result1[0].email;
     const token = randomToken(8);
+    db.findTempAdmin(id, (err, result) => {
+      console.log("result", result);
+      if (result) {
+        db.updateTempAdmin(id, token);
+      }
+    });
     db.tempAdmin(id, email, token, function (err, result2) {
       const output =
         `

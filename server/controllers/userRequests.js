@@ -22,7 +22,7 @@ router.get("/userrequests", function (req, res) {
 router.get("/approverequest/:userid/:donorid", function (req, res) {
   const { userid, donorid } = req.params;
   console.log("alu", req.params);
-  db.getUserbyId(userid, donorid, function (err, result) {
+  db.getReqUserbyId(userid, donorid, function (err, result) {
     console.log(result);
     res.render("userRequest/approveRequest.ejs", { list: result });
   });
@@ -38,7 +38,8 @@ router.post("/approverequest/:userid/:donorid", function (req, res) {
 
     db.getFullDonorInfo(userid, (err, result) => {
       if (err) throw err;
-      res.status(200).json({ result: result });
+      // res.status(200).json({ result: result });
+      res.redirect("/userrequests");
     });
 
     // res.redirect("/userrequests");
@@ -53,24 +54,36 @@ router.post("/donorfulldata/:userid", function (req, res) {
   });
 });
 
-router.get("/declinerequest/:id", function (req, res) {
-  var id = req.params.id;
-  db.getUserbyId(id, function (err, result) {
+router.get("/declinerequest/:userid/:donorid", function (req, res) {
+  const { userid, donorid } = req.params;
+  console.log("katar", req.params);
+  db.getReqUserbyId(userid, donorid, function (err, result) {
+    if (err) throw err;
+    console.log("declinessssssss", result);
     res.render("userRequest/declineRequest.ejs", { list: result });
   });
 });
 
-router.post("/declinerequest/:id", function (req, res) {
-  const id = req.params.id;
+router.post("/declinerequest/:userid/:donorid", function (req, res) {
+  const { userid, donorid } = req.params;
+
+  console.log("matar", req.params);
   const reqstatus = "Declined";
-  db.updateReqStatus(id, reqstatus, function (err, result) {
-    res.redirect("/userrequests");
+  db.updateReqStatus(userid, donorid, reqstatus, function (err, result) {
+    if (err) throw err;
+    console.log("HALO", result);
+
+    db.getFullDonorInfoDeclined(userid, (err, result) => {
+      if (err) throw err;
+      // res.status(200).json({ result: result });
+      res.redirect("/userrequests");
+    });
   });
 });
 
 router.post("/userrequests/search", function (req, res) {
-  var key = req.body.search;
-  db.searchmed(key, function (err, result) {
+  const key = req.body.search;
+  db.searchRequestUser(key, function (err, result) {
     console.log(result);
 
     res.render("userRequest/userRequest.ejs", { list: result });
