@@ -23,10 +23,10 @@ router.post(
   //     check("address").notEmpty().withMessage("Address is required"),
   //   ],
   async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   return res.status(422).json({ errors: errors.array() });
+    // }
 
     const emailstatus = "not_verified";
     const reqstatus = "idle";
@@ -77,12 +77,12 @@ router.post(
             console.log("Signup DOneeeeeee!!");
             const token = randomToken(8);
 
-            db.findUserVerify(id, (err, result) => {
-              console.log("result", result);
-              if (result) {
-                db.updateVerify(id, token);
-              }
-            });
+            // db.findUserVerify(id, (err, result) => {
+            //   console.log("result", result);
+            //   if (result) {
+            //     db.updateVerify(id, token);
+            //   }
+            // });
 
             db.verify(username, email, token);
 

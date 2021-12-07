@@ -1,16 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-// export const fetchUserDetail = createAsyncThunk(
-//   "get/user/",
-//   async (payload) => {
-//     try {
-//       const userData = await axios.get(`http://localhost:3001`);
-//       return [userData.data, null];
-//     } catch (error) {
-//       return [null, JSON.parse(error)];
-//     }
-//   }
-// );
 
 //first ma result bhanne json from backend aucha jun chai post garda action ma userData bhayera bascha. user data bhitra data huncha, data bhitra result.
 //userData.data bhaneko hamro backend bata aako result ho. Teslai hamile reducer ma userData bhanne array banayera rakhchau.

@@ -5,8 +5,6 @@ const cors = require("cors");
 
 const app = express();
 
-const bodyParser = require("body-parser");
-
 const login = require("./controllers/login");
 const profile = require("./controllers/profile");
 const signup = require("./controllers/signup");

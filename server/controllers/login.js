@@ -33,8 +33,8 @@ router.use(express.json());
 router.post(
   "/",
   [
-    check("username").notEmpty().withMessage("Username is reequired"),
-    check("password").notEmpty().withMessage("Password is reequired"),
+    check("username").notEmpty().withMessage("Username is required"),
+    check("password").notEmpty().withMessage("Password is required"),
   ],
   function (request, response) {
     const errors = validationResult(request);

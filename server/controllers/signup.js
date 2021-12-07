@@ -29,7 +29,13 @@ router.post(
     const email_status = "not_verified";
     const email = req.body.email;
     const username = req.body.username;
-
+    // db.checkUserAdmin(email, (err, result) => {
+    //   if (result.length > 0) {
+    //     // res.send();
+    //     res
+    //       .status(404)
+    //       .json({ message: "User already exists.", type: "warning" });
+    //   } else {
     db.signupAdmin(
       req.body.username,
       req.body.email,
@@ -37,12 +43,12 @@ router.post(
       email_status
     );
     const token = randomToken(8);
-    db.findUserVerifyAdmin(id, (err, result) => {
-      console.log("result", result);
-      if (result) {
-        db.updateVerifyAdmin(id, token);
-      }
-    });
+    // db.findUserVerifyAdmin(id, (err, result) => {
+    //   console.log("result", result);
+    //   if (result) {
+    //     db.updateVerifyAdmin(id, token);
+    //   }
+    // });
 
     db.verifyAdmin(req.body.username, email, token);
 
@@ -51,26 +57,26 @@ router.post(
       const id = result[0].id;
       const output =
         `
-            <p>Dear  ` +
+              <p>Dear  ` +
         username +
         `, </p>
-            <p>Thanks for sign up. Your verification id and token is given below :  </p>
-           
-            <ul>
-                <li>User ID: ` +
+              <p>Thanks for sign up. Your verification id and token is given below :  </p>
+             
+              <ul>
+                  <li>User ID: ` +
         id +
         `</li>
-                <li>Token: ` +
+                  <li>Token: ` +
         token +
         `</li>
-            </ul>
-            <p>verify Link: <a href="http://localhost:3001/verify">Verify</a></p>
-            
-            <p><strong>This is an automatically generated mail. Please do not reply back.</strong></p>
-            
-            <p>Regards,</p>
-            <p>H Manager</p>
-        `;
+              </ul>
+              <p>verify Link: <a href="http://localhost:3001/verify">Verify</a></p>
+              
+              <p><strong>This is an automatically generated mail. Please do not reply back.</strong></p>
+              
+              <p>Regards,</p>
+              <p>H Manager</p>
+          `;
 
       const transporter = nodemailer.createTransport({
         service: "gmail",
@@ -95,8 +101,10 @@ router.post(
 
       // res.send ('Check you email for token to verify');
     });
+    // }
 
     res.redirect("verify");
+    // });
   }
 );
 

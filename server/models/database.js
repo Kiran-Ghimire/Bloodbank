@@ -21,6 +21,11 @@ module.exports.checkUser = function (email, callback) {
   con.query(query, callback);
 };
 
+module.exports.checkUserAdmin = function (email, callback) {
+  const query = "select * from adminuser where email = '" + email + "' ";
+  con.query(query, callback);
+};
+
 module.exports.signup = function (
   username,
   email,
