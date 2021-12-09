@@ -41,7 +41,7 @@ const RequestedCard = ({ totalRequest }) => {
               //   dispatch(totalReq({ userid: userid }));
               // }}
               disabled={
-                donor.reqstatus == "Approved" || "Requested" ? true : false
+                donor.reqstatus === "Approved" || "Requested" ? true : false
               }
             >
               Request to Admin

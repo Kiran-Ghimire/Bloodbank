@@ -1,16 +1,11 @@
 const express = require("express");
-const flash = require("flash");
+
 const router = express.Router();
-const bodyParser = require("body-parser");
-//const async = require ('async');
+
 const nodemailer = require("nodemailer");
-//const crypto = require ('crypto');
+
 const randomToken = require("random-token");
 const db = require.main.require("./models/database.js");
-
-// router.get('/',function(req,res){
-//     res.render('auth/resetpassword.ejs');
-// });
 
 router.post("/userresetpassword", function (req, res) {
   const email = req.body.email;
@@ -18,7 +13,6 @@ router.post("/userresetpassword", function (req, res) {
     console.log("result1", result1);
     if (!result1) {
       console.log("Mail does not exist");
-      //   res.redirect("back");
     }
 
     const id = result1[0].userid;

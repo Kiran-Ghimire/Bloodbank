@@ -39,7 +39,7 @@ router.get("/", function (req, res) {
 router.get("/editUser/:id", function (req, res) {
   const id = req.params.id;
 
-  db.getUserbyId(id, function (err, result) {
+  db.getUser(id, function (err, result) {
     if (err) throw err;
     res.render("user/editUser.ejs", { list: result });
   });
@@ -70,7 +70,7 @@ router.post("/editUser/:id", function (req, res) {
 
 router.get("/deleteUser/:id", function (req, res) {
   const id = req.params.id;
-  db.getUserbyId(id, function (err, result) {
+  db.getUser(id, function (err, result) {
     if (err) throw err;
     res.render("user/deleteUser.ejs", { list: result });
   });
@@ -83,21 +83,6 @@ router.post("/deleteUser/:id", function (req, res) {
     res.redirect("/users");
   });
 });
-
-//  router.get('/search',function(req,res){
-//      res.rende
-//      const key = req.body.search;
-//      console.log(key);
-//     db.searchDoc(key,function(err, rows, fields) {
-//         if (err) throw err;
-//       const data=[];
-//       for(i=0;i<rows.length;i++)
-//         {
-//           data.push(rows[i].first_name);
-//         }
-//         res.end(JSON.stringify(data));
-//       });
-//     });
 
 router.get("/", function (req, res) {
   db.getAllUser(function (err, result) {

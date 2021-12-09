@@ -5,7 +5,7 @@ const session = require("express-session");
 const router = express.Router();
 const bodyParser = require("body-parser");
 // const db = require.main.require("./models/db_controller");
-const sweetalert = require("sweetalert2");
+
 const { check, validationResult } = require("express-validator");
 
 router.get("/", function (req, res) {
@@ -58,7 +58,6 @@ router.post(
             if (status === "not_verified") {
               response.send("please verify your email");
             } else {
-              sweetalert.fire("logged In!");
               response.redirect("/");
             }
           } else {
