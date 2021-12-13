@@ -3,10 +3,6 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 const db = require.main.require("./models/database");
 
-// router.get('/',function(req,res){
-//     res.render('auth/verify.ejs');
-// });
-
 router.post("/verifyuser", function (req, res) {
   const id = req.body.userid;
   const token = req.body.token;

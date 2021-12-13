@@ -11,25 +11,10 @@ const router = express.Router();
 
 router.post(
   "/blood",
-  //   [
-  //     check("username").notEmpty().withMessage("Username is required"),
 
-  //     check("email").notEmpty().isEmail().withMessage("Valid Email required"),
-  //     check("password").notEmpty().withMessage("Password is required"),
-  //     check("dob").notEmpty().withMessage("Date of birth is required"),
-  //     check("phone").notEmpty().withMessage("Phone is required"),
-  //     check("gender").notEmpty().withMessage("Gender is required"),
-  //     check("bloodtype").notEmpty().withMessage("Blood type is required"),
-  //     check("address").notEmpty().withMessage("Address is required"),
-  //   ],
   async (req, res) => {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //   return res.status(422).json({ errors: errors.array() });
-    // }
-
     const emailstatus = "not_verified";
-    const reqstatus = "idle";
+
     const {
       username,
       email,
@@ -133,11 +118,8 @@ router.post(
                 }
                 console.log(info);
               });
-
-              // res.send ('Check you email for token to verify');
             });
           }
-          // res.redirect("verifymail");
         });
       }
     });

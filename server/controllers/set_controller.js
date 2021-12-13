@@ -1,12 +1,9 @@
 const express = require("express");
 
 const router = express.Router();
-const bodyParser = require("body-parser");
+
 const db = require.main.require("./models/database");
 const { check, validationResult } = require("express-validator");
-
-// router.use(bodyParser.urlencoded({ extended: true }));
-// router.use(bodyParser.json());
 
 module.exports = router;
 

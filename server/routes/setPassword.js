@@ -4,13 +4,6 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 const db = require.main.require("./models/database");
 const saltRounds = 10;
-// router.use(bodyParser.urlencoded({ extended: true }));
-// router.use(bodyParser.json());
-
-// router.get('/',function(req,res){
-
-//     res.render('auth/setpassword.ejs');
-// });
 
 router.post("/usersetpassword", function (req, res) {
   const token = req.body.token;

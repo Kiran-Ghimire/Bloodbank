@@ -16,7 +16,6 @@ router.post("/editprofile", function (req, res) {
 
     console.log("reqbody", req.body),
     console.log("values", req.body.values, req.body.id),
-    // req.body.emailstatus,
 
     function (err, result) {
       console.log("edituser", result);

@@ -41,8 +41,6 @@ router.post("/approverequest/:userid/:donorid", function (req, res) {
       // res.status(200).json({ result: result });
       res.redirect("/userrequests");
     });
-
-    // res.redirect("/userrequests");
   });
 });
 

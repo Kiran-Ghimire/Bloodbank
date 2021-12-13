@@ -38,7 +38,7 @@ const DonorDetailCard = ({ donors, donorSearch }) => {
             <p>Bloodtype: {donor.bloodtype}</p>
             <p>Address: {donor.address}</p>
             {console.log(donor.reqstatus)}
-            {/* {donor.reqstatus !== "Requested" || donor.reqstatus !== "Approved" ? ( */}
+
             <Button
               type="primary"
               htmlType="submit"
@@ -48,13 +48,9 @@ const DonorDetailCard = ({ donors, donorSearch }) => {
                 );
                 setDisable(true);
               }}
-              // disabled={disable}
             >
               Request to Admin
             </Button>
-            {/* // ) : (
-          //   ""
-          // )} */}
           </Card>
         ) : null
       )}

@@ -35,7 +35,6 @@ router.post(
               const token = jwt.sign({ id }, "jwtSecret", {
                 expiresIn: 300,
               });
-              // req.session.username = result;
 
               res.json({ auth: true, token: token, result: result });
             } else {
@@ -53,13 +52,5 @@ router.post(
     });
   }
 );
-
-// router.get("/userlogin", (req, res) => {
-//   if (req.session) {
-//     res.send({ loggedIn: true, user: req.session });
-//   } else {
-//     res.send({ loggedIn: false });
-//   }
-// });
 
 module.exports = router;

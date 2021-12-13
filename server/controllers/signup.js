@@ -98,8 +98,6 @@ router.post(
         }
         console.log(info);
       });
-
-      // res.send ('Check you email for token to verify');
     });
     // }
 

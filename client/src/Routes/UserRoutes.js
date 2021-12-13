@@ -24,14 +24,6 @@ export default function UserRoutes() {
 
   return (
     <Switch>
-      {/* <Route
-        exact
-        path="*"
-        element={<ProtectedRoute isAuth={token} component={<Bloodbank />} />}
-      ></Route> */}
-      {/* <Route exact path="/" element={<Bloodbank />} /> */}
-
-      {/* <ProtectedRoute isAuth={token} component={<Bloodbank />} /> */}
       <Route exact path="/login" component={Login} />
       <Route exact path="/signup" component={Signup} />
       <Route exact path="/verify" component={Verify} />

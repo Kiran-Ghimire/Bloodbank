@@ -93,29 +93,7 @@ const Bloodbank = () => {
                 Logout
               </Button>
             </div>
-            <div>
-              {/* <Button
-                type="primary"
-                onClick={showModal}
-                disabled={role === "Donor" ? true : false}
-              >
-                {" "}
-                Become a donor
-              </Button> */}
-              {/* <Modal
-                title="Become a Donor"
-                visible={isModalVisible}
-                onOk={handleOk}
-                onCancel={handleCancel}
-              >
-                <p>Are you sure you want to become a donor?</p>
-                <p>
-                  If you become a donor your data will be visible to other
-                  users.
-                </p>
-                <p>If you become a donor you can donate blood.</p>
-              </Modal> */}
-            </div>
+            <div></div>
           </div>
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>

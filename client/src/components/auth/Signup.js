@@ -27,18 +27,8 @@ const formItemLayout = {
     xs: {
       span: 10,
     },
-    //   sm: {
-    //     span: 8,
-    //   },
   },
-  wrapperCol: {
-    //   xs: {
-    //     span: 24,
-    //   },
-    //   sm: {
-    //     span: 16,
-    //   },
-  },
+  wrapperCol: {},
 };
 const tailFormItemLayout = {
   wrapperCol: {
@@ -52,22 +42,6 @@ const tailFormItemLayout = {
     },
   },
 };
-//   useEffect(() => {
-
-//     getUserInfo();
-
-// }, []);
-
-//   const getUserInfo = () => {
-//     axios.get(`/signup/user`)
-//     .then((res) => {const userInfo = res.data.result;
-//       //console.log(res);
-//       setValue(userInfo);
-
-//     })
-
-//     .catch((err) => console.log(err));
-//   }
 
 const Signup = () => {
   const history = useHistory();

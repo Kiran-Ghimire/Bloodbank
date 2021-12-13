@@ -3,9 +3,6 @@ const router = express.Router();
 
 const db = require.main.require("./models/database");
 
-// router.use(bodyParser.urlencoded({extended : true}));
-// router.use(bodyParser.json());
-
 module.exports = router;
 
 router.get("/", function (req, res) {

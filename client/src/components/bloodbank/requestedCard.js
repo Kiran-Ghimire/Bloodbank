@@ -30,25 +30,16 @@ const RequestedCard = ({ totalRequest }) => {
             <p>Bloodtype: {donor.bloodtype}</p>
             <p>Address: {donor.address}</p>
             {console.log(donor.reqstatus)}
-            {/* {donor.reqstatus !== "Requested" || donor.reqstatus !== "Approved" ? ( */}
+
             <Button
               type="primary"
               htmlType="submit"
-              // onClick={() => {
-              //   dispatch(
-              //     requestDonor({ userid: userid, donorid: donor.donorid })
-              //   );
-              //   dispatch(totalReq({ userid: userid }));
-              // }}
               disabled={
                 donor.reqstatus === "Approved" || "Requested" ? true : false
               }
             >
               Request to Admin
             </Button>
-            {/* // ) : (
-          //   ""
-          // )} */}
           </Card>
         ))}
     </div>

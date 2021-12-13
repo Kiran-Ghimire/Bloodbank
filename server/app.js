@@ -24,7 +24,7 @@ const loginUser = require("./routes/login");
 const logoutUser = require("./routes/logout");
 const userPasswordReset = require("./routes/resetPassword");
 const userSetPassword = require("./routes/setPassword");
-// const becomeDonor = require("./routes/becomeDonor");
+
 const profileUser = require("./routes/profileUser");
 const changePassword = require("./routes/changePassword");
 const searchDonor = require("./routes/searchDonorUser");
@@ -36,7 +36,7 @@ app.use(express.static("./public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookie());
-//app.use(expressValidator());
+
 app.use(
   cors({
     origin: "*",
@@ -65,7 +65,6 @@ app.use(requestAdmin);
 app.use(userRequests);
 app.use("/users", users);
 
-// app.use(becomeDonor);
 app.use("/donors", donors);
 app.use("/userlogout", logoutUser);
 app.use("/logout", logout);

@@ -1,10 +1,9 @@
 const express = require("express");
 
 const router = express.Router();
-const bodyParser = require("body-parser");
-//const async = require ('async');
+
 const nodemailer = require("nodemailer");
-//const crypto = require ('crypto');
+
 const randomToken = require("random-token");
 const db = require.main.require("./models/database");
 const { check, validationResult } = require("express-validator");
@@ -23,7 +22,6 @@ router.post(
     }
     const email = req.body.email;
     db.findOneAdmin(email, function (err, result1) {
-      // console.log(result);
       if (!result1) {
         console.log("Mail does not exist");
         res.redirect("back");
